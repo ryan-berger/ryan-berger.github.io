@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Ryan Berger</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/home.css">
+</head>
+<body>
+<div class="container">
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/header.js"></script>
+    <div class="sidenav">
+        <div class="sidenav__header"></div>
+        <a href="/" class="sidenav__item">Home</a>
+        <a href="/about" class="sidenav__item">About Me</a>
+        <a href="/my-projects" class="sidenav__item">My Projects</a>
+    </div>
+
+    <div class="overlay"></div>
+
+    <div class="header">
+        <link rel="stylesheet" type="text/css" href="/static/css/header.css">
+        <img class="header__menu" src="/static/assets/menu.png"/>
+        <div class="filler"></div>
+        <a class="header__button" href="/">Home</a>
+        <a class="header__button" href="/about">About Me</a>
+        <a class="header__button" href="/my-projects">My Projects</a>
+    </div>
+    <div class="header-fake"></div>
+
+    <div class="hero">
+        <div class="hero__body">
+            <h1 class="hero__header-text">Hello, nice to meet you.</h1>
+            <h3 class="hero__body-text">
+                I'm Ryan Berger and I'm a full stack developer who works to build
+                scalable REST API's for your business
+            </h3>
+            <div class="hero__action">
+                <a href="/about">About Me</a>
+            </div>
+        </div>
+    </div>
+    <div class="technology technology--reversed">
+        <div class="technology__text">
+            Need a simple, clean, and fast site? Golang is your answer!
+            Golang is an extremely fast language for building webservers. Your site
+            can be setup quickly and handle thousands of users!
+        </div>
+        <img src="/static/assets/languages/gopher.png" class="technology__image" style="max-height: 400px">
+    </div>
+    <div class="technology">
+        <img src="/static/assets/languages/rest.png" class="technology__image">
+        <div class="technology__text">
+            With Django's Rest Framework, building REST API's is secure
+            and efficient allowing me to quickly build custom API's to fit your company's
+            needs
+        </div>
+    </div>
+    <div class="technology technology--reversed">
+        <div class="technology__text">
+            Kotlin is an Android development language that
+            gives a competitive edge to its developers by it being much faster
+            to write while keeping it's maintainability. Kotlin will help your business
+            get off the ground much faster and allow for long lasting codebases
+        </div>
+        <img src="/static/assets/languages/kotlin.png" class="technology__image">
+    </div>
+    <div class="technology">
+        <img src="/static/assets/languages/angular.png" class="technology__image">
+        <div class="technology__text">
+            Angular is an HTML templating engine backed by Google meant for scalability
+            and fast rendering. It allows writing front-end applications very quickly
+            due to it's ease of use and fits very well with Django's Rest Framework.
+        </div>
+    </div>
+</div>
+</body>
+</html>
