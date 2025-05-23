@@ -1,118 +1,207 @@
 ---
 title: "Programming at a Cafe at the End of the Universe"
-date: 2025-03-28T17:34:30-07:00
-searchHidden: true
-draft: true
+date: 2025-05-23T17:34:30-07:00
+searchHidden: false
+draft: false
 ---
 
-Hello! My name is Ryan Berger, I'm a 24 year old software developer living in Seattle, WA. This is the first real post of
-my blog, and oh boy is it a doozy!
+Hello! My name is Ryan Berger, I'm a 24-year-old software developer living in Seattle, WA. This is the first real post
+of my blog, and oh boy is it a doozy!
 
 To cut it short: in the coming months, I will be undergoing a bilateral lung transplant at the University of Washington.
-I have - since I was 13 - known this was coming, but my lung function and blood tests show that I am not too far off from
-respiratory failure. My doctors have determined that I am in good shape and my particular circumstances make recovery hard
-so I need to be as healthy as possible going into it.
 
-However, if you know me or have met me, you probably would not have guessed this is where I'm at. I currently work a full time job
-at a large software company. I work on compiler security, which is an interesting intersection that until recently I didn't know
-existed! I have a normal-ish social life. I play chess at the local chess club, have a beer every once and a while, but try to avoid
-crowds like concerts, and if I do go I mask up. I hang out at Espresso Vivace in Capitol Hill almost every day, as they have some of
-the best coffee in the world (I'm not joking, in fact, they're world renowned!)
+I have - since I was 13 - known this was coming, but my lung function and blood tests show that I am not too far off
+from respiratory failure. My doctors have determined that I am in good shape and it is now time.
 
-Lung transplants are no joke, especially mine. Although small, there is a chance that I won't make it or will end up fully disabled.
-I wouldn't take this option if I didn't think it would give me a better quality of life than I had before. All lung transplants
-end in chronic rejection of the organ, so at a minimum I have that to look forward to. 
-However, because of a bonemarrow transplant I had at 6 months old, I am currently going through that song and dance of my stem cell transplant 
-rejecting my lungs. It's a bit different, but similar enough that I'm willing to ride the ride a second time. And even better, this time I'll
-get to use a much fuller immunosuppressive and anti-rejection regime because having a different set of lungs and keeping them healthy will override
-all of my current concerns of being immunosuppressed.
+If you know me superficially, you probably would not have guessed my condition. I currently work a full time job at a
+large software company.
+I work on compilers! I have a normal-ish social life. I play chess at local chess nights, go to concerts (although masked), and visit the art museums.
 
-Because of this chance, I wanted to write a short post about the things that I've done that I'm proud of, the small amount of travelling I've done and
-places I've seen, some things that make me happy that I want to share with others, and some hard-fought knowledge I've learned. This post isn't me memorializing,
-myself because I plan on getting out of this okay, so I'll leave a sneak peak of what I plan on doing once my lungs are no longer diseased
+Lung transplants are no joke, especially mine. Although small, there is a chance that I won't make it or will end up
+fully disabled. I wouldn't take this option if I didn't think it would give me a better quality of life than I had
+before.
+
+Because of this chance, I wanted to write a short post about the things that I've done that I'm proud of.
+This post isn't me memorializing, myself because I plan on getting out of this okay, so I'll leave a sneak peek of
+what I plan on doing once my lungs are no longer diseased
 
 ## Things I'm Proud Of
 
 ### First Coding Job
 
-Although Bryan Cantrill's talk heavily applies here, I'm extremely happy that I was able to quickly learn programming between the ages of 12-15,
-enough that when I was 16 (of working legal age in the US) that I was able to apply for a job at a local DevShop. I intially started out as a mentee
-through a local middle school program, and it slowly evolved into a job. My mentors there set me on the right track and taught me invaluable software
-skills that they had learned from being the launchpad for many startups around Utah. Ahead of my peers, I knew to ship early and often, how and when
-to start optimizing, software architecture skills, and how to work in a team. 
+Although [Bryan Cantrill's talk](https://www.youtube.com/watch?v=VzdVSMRu16g) heavily applies here,
+I'm extremely happy that I was able to quickly learn programming between the ages of 12-15, enough that when I was 16
+(working legal age in the US) that I was able to apply for a job at a local DevShop. I initially started out as a mentee
+through a local middle school program,
+and it slowly evolved into a job.
+
+My mentors there set me on the right track and taught me invaluable software development
+skills that they had learned from being the launchpad for many startups around Utah. Ahead of my peers, I knew to ship
+early and often, how and when to start optimizing, software architecture skills, and how to work in a team.
 
 ### Eagle Scout
 
-A lot of Eagle Scouts pre-2018 from Utah are due to the large-scale standardization of the Scouting program that the LDS (/Mormon) church for their
-young men between the ages of 12 and 18. Many of these projects are carried out by their parents and generally barely check the boxes by doing something
-along the lines of a blood drive, or food drive. They require little to no extra work, and require little to no extra care for the communities they serve.
+Growing up in Utah, a majority of young men between the ages of 12 and 18 are Eagle Scouts, which requires a form of a
+capstone, an "Eagle Scout Project". At least in my area, many of these projects are wholly carried out by the parents
+of the kids, and generally barely check the boxes by doing something such as organizing a blood
+drive (calling the Red Cross), or food drive (setting up a food donation spot on their porch).
 
-I decided that I didn't want my project to be like that. I visited the Ronald McDonald House of Salt Lake City and noticed their computer lab was lacking,
-and since many familes are uprooted to 
+I decided that I didn't want my project to be like that. Due to extensive time in the hospital, my family and I have
+stayed at the Ronald McDonald house, a charity that provides housing to families who need housing and community
+while their child is in the hospital. I visited the Ronald McDonald House of Salt Lake City and noticed
+their computer lab was lacking.
 
-### Senor Wooly
+With kettle corn supplies donated by my parents, my troop and I popped many thousands of dollars worth of popcorn in an
+industrial kettle corn popper. I went door to door selling and organized multiple sales outside of
+grocery markets and farmers markets. In the end we sold enough to
+[donate 30 Chromebooks](https://servedaily.com/2016/04/01/scout-thanks-community-for-supporting-eagle-project/)
+to the Ronald McDonald house. With the leftover money, we were able to also provide the house with a meal.
+I am very proud of my 15-year-old self who noticed a community need anf fulfilled it.
 
-Senor Wooly is one of my greatest engineering acheivements. At 19 I was a broke college student who was looking for a one-off side gig to make extra cash.
-I went on UpWork and found a familiar face. Sr. Wooly, the Spanish language learning program I used in high school. After an interview, Jim Wooldridge
-(Sr. Wooly himself) decided to give me a chance because I was a) an Eagle Scout and b) I used Sr. Wooly in junior high.
+### Señor Wooly
 
-After a full summer of work, I rolled out a new and revamped Teacher site. It was FLASHY. It had a statistics dashboard (shout out to my first job for 
-teaching me how to make efficient statistical dashboards) and tons of new teacher management features. After an all-night rollout and a few outages here or
-there, I noticed the technical debt from my and previous developers were building up. Our hosting was a mess, and everything was extremely overprovisioned
-due to a well-documented memory leak in the Gorilla Mux library from Go pre 1.13. After an upgrade, dashboard, metrics, monitoring, an eventual migration
-to a PaaS to only scale up during the day, and a Graphic Novel reader, my work there was done. It had been 4 years and the level of on call and Everything
+Señor Wooly is one of my greatest engineering achievements. At 19, I was a broke college student who was looking for a
+one-off side gig to make extra cash. I went on UpWork and found a familiar face: Sr. Wooly, the Spanish language
+learning program I used in junior high. After an interview, Jim Wooldridge (Sr. Wooly himself) decided to give me
+a chance because I was a) an Eagle Scout and b) I used Sr. Wooly in junior high.
+
+After a full summer of work, I rolled out a new and revamped Teacher site. It was FLASHY. It had a statistics dashboard
+to make grading easy and tons of new teacher management features.
+Because of the roaring success, Jim had come to trust my instinct, and we were off to the races with tons of new
+features and hosting improvements. Soon it had been 4 years and the level of on-call and Everything
 Man work that I had to do was too much for me.
 
-It has been interesting to look back on that experience as I believe it took me from a junior engineer to a senior engineer over 4 to 5 years. It gave me
-tons of experience talking with non-technical people, interfacing with the school district IT staff. I was essentially a CTO without the title, or a founding
-engineer if you will. I had to balance tons of technical and people requirements and I got to see first hand how my decisions played out. I had to be
-_just that good_ or else a lot would fall apart.
+It has been interesting to look back on that experience as I believe it took me from a junior engineer to a senior
+engineer over 4 to 5 years. It gave me tons of experience requirement gathering from non-technical folks,
+and interfacing with the school district IT staff. It was also a harsh test of my decision-making skills
+as whatever technical decisions I made I was stuck with, and had to see first hand how they decisions played out.
 
 ### Graduating College
 
-To keep this short, college for the first 2.5 years was extremely easy for me due to the above programming experience. The last 1.5 I really pushed myself
-and got into Distributed Systems (by implementing Raft) and doing a self-study (thanks to John Regehr and Ryan Stutsman). 
-I took a graduate-level operating systems course, along with a compilers course taught by John Regehr. 
-For my senior capstone, I then worked on ARM-TV, an ARM lifter that attempts to lift ARM code back into LLVM IR in a semantics
-preserving way. Before the project was taken over by a few of my fellow students as I was on the way out the door, it even found a couple of bugs from global-isel
-in the backend!
+College for the first 2.5 years was extremely easy for me due to my programming experience. The last 1.5 I really pushed
+myself and got into distributed systems with Raft thanks to Ryan Stutsman. I took a graduate-level operating systems
+course, along with a compilers course both taught by John Regehr.
 
-I think without pushing myself to the next level of developer and pushing through the numerous hard classes I wouldn't be the developer (or person!) I am today.
-Cruising through high school and most of college was extremely detrimental to me, and it was good to finally be required to work hard to achieve my aims.
+For my senior capstone, I then worked on [ARM-TV](https://blog.regehr.org/archives/2265) with John. It is an ARM lifter
+that attempts to lift ARM code back into LLVM IR in a semantics preserving way. Before the project was taken over by 
+a few of my fellow students as I was on the way out the door, it found a couple of bugs from global-isel in the backend!
+ARM-TV was probably the _coolest_ engineering project I've worked on, and it got me my current job.
+
+I think without pushing myself to the next level of developer and pushing through the numerous hard classes I wouldn't
+be the developer (or person!) I am today. Cruising through high school and college uncritically was extremely
+detrimental to me, and it was good to finally be required to work hard to achieve my aims.
+
+Pushing through and getting through college with only a _couple_ lung collapses is something I am _extremely_
+proud of. I could not do the same now.
+
+### Getting a Compiler Job
+
+Although it wasn't my first job out of college, I ended up landing a job doing work in the doing programming language
+field at $BIG\_CORP. After doing a lot of generic software development (i.e. frontend/backend/db stack)
+I was wanting a bit more out of my work, and I wanted to do something "meaningful". Building Yet Another CRUD Site
+for something that Probably Doesn't Need an App doesn't scream meaningful to me.
+
+Even with my current health issues, I was able to scrape the energy to study extremely hard outside my 9-5 to be
+involved in outside research and to do interview prep. I was able to stabilize my health enough that
+I felt comfortable making the jump into PL research and I did!
+
+Getting a more meaningful job is something that I am extremely proud of.
 
 ### Gaining Weight
 
-For most of my life, I was a whopping 94/95lbs (43kg for the enlightened) at 5'7". Why? Lots of reasons. My lungs work 2-4 times harder than the normal person
-which requires a serious "eat anything you can" lifestyle. Before it was an adult, it was mostly blamed on the fact that my dad wasn't too far off my weight
-when I was his age, so it must just be genetic. At some point however, that started to become a problem. I was told that there would be no option for a lung
-transplant if I kept my weight, and the lack of weight was causing prolonged hospitalizations after surgeries as it took a while for me to heal.
+For most of my life, I was a whopping 94/95lbs (43kg for the enlightened) at 5'7" (170cm).
+My lungs work 2-4 times harder than the normal person which requires a serious "eat anything you can" lifestyle.
+It also didn't help that my dad was pretty small as a kid as well. As I got closer to transpant,
+it became a problem. I was told that there would be no option for a lung transplant if I didn't get my weight up.
 
-A bit over a year ago I decided enough was enough and that even if it took getting a feeding tube I'd become a normal weight. I saw 130lbs (~60kg) as an unacheivable
-mountain that could never be summitted. However, after getting a permanent feeding tube placed and pushing myself to eat more and more, I eventually gained 35 pounds
-in a year, even with an H. Pylori infection that left me nauseous!
+A bit over a year ago I decided enough was enough and that even if it took getting a feeding tube I'd become a normal
+weight. I saw 130lbs (~60kg) as an unachievable mountain that could never be summited. However, after getting a
+permanent feeding (PEG) tube placed and pushing myself to eat more and more, I eventually gained 35 pounds in a year!
+
+[NSFW: shirt-off progress picture](/cafe/progress.png)
 
 ### Keeping Active
 
-One reason many people don't realize that I'm disabled is because of how active I have been. 
+One reason many people don't realize that I'm disabled is because of how active I have been. As a Boy Scout, I had the
+choice of either the swimming or biking merit badge. I chose biking and although my lung function was in the high 40s,
+I finished the required 50 mile ride with my mom in about 4 hours.
 
-## Things I've Learned
+I hiked to the Delicate Arch and Angel's Landing with my lung function in the low 40s, walked around my college campus,
+and after a COVID infection and hitting the 30s, I started pulmonary rehab. I was running 12-minute miles when my
+lung function was in the 30s and lifting weights, netting me an extra 15 pounds (although those were short-lived).
 
+Even now with my lung function in the low 20s, I walk the hills in Seattle. I walk slower than a 90-year-old, but I do
+it. I make it a priority to get out every day and walk the hill. I am very proud of this fact as many of my
+doctors are pretty shocked that I'm still able, and expect that this will make my recovery from transplant much
+easier than a majority of other patients.
 
-### I'm Not a Temporarily-Disabled Able-Bodied Person.
+## For the Future
 
-This sounds stupid, but it has been a hard lesson. A few times in the past 5 years I've gotten close to my doctors declaring me disabled, at which point I would
-no longer be working full time, and would instead take disability checks from Social Security. However, as many Americans are aware, the social safety nets here
-are atrocious. Even though I would no longer be fit to work, I would need to wait an extended amount of time to qualify for disability because I have a savings account
-that had thousands in it. Not until I had under $2,000 in assets would my checks kick in.
+With all that out of the way, what do I plan on doing after a lung transplant?
 
-Even though I did many things to attempt to plan against this, I still didn't get it through my thick skull that I was _partially_ disabled, and my lungs could
-collapse, or I could be in respiratory failure and then I _would_ be disabled. This is compounded by the fact that I look entirely able bodied, I act as if nothing
-is wrong, I travel, and outside of being a bit skinny, no one would ever know if I told them.
+Well, this is dependent and I have been making sure to make goals for all different levels of ability, but for now I'll
+assume that I have a better functioning
+body than I do currently.
 
-Part of having my lung function drop so hard has been a recognition that I am disabled, I need more sleep, more help around the house, and a lot of my socially
-or task avoidant behaviors were actually me just saving energy. By resting more, being more kind to myself, and not acting like a temporarily-disabled abled-body person, then I do myself a lot more good
+### Travel
 
-### It is Better to be Lonely Than to be With Someone Hurtful
+As a child I went to London for a Make-a-Wish. It was lovely, I had a ton of fun. I'd like to take a skip across the
+channel into Europe and travel everywhere
+a train can take me. Spain, Netherlands, Germany, France, Italy, Switzerland, Austria, Denmark, Sweden, Turkey just as
+much as I can.
+Try out all the local cuisines, get to know interesting people, and who knows! Maybe I'll end up staying in one.
 
+I also want to travel Asia. I do have to be a bit more cautious and stay close to countries that could handle my medical
+care, so I currently have Japan, China,
+South Korea, and Vietnam that I'm interested in visiting.
+
+### Learning
+
+I'm a big learner. I want to constantly be learning. Some of my friends are currently doing their PhDs in computer
+science, and to be honest, I am a bit jealous.
+It isn't necessarily that I want to stay in academia forever, nor do I envy the "publish or perish" mentality of
+academia. Instead, I see a PhD as a time to work
+on something risky, something that may not initially or immediately be useful or turn a profit. Also having been in
+industry, and doing work with John Regehr, I prefer
+that if I write a tool, or do research that it be useful and be maintained instead of thrown away after a paper (see
+CSmith and Alive/Alive2 as great examples of this).
+
+### Move a Lot
+
+I currently live in Seattle, and moved here for healthcare reasons. Utah's healthcare is better than completely rural
+medicine, but it is still struggling to catch up to larger states such as Washington or California's.
+Once healthcare isn't so much of a consideration, I want to try out new places! New York, Boston, SF, or maybe abroad!
+
+### Get a Pet
+
+When my health outcomes weren't very apparent, my parents decided a small creature would help out with my anxiety and
+give me company. They had been insistent on no pets for most of my life, but decided to make an exception for Emi,
+our 8-year-old Sesame Shiba Inu. The idea was that once I graduated from college I could take her in as mine, but
+because I can't keep up with her walking needs, and because the entire family fell in love with her,
+she has remained at my parent's.
+
+With a new lease on life, I'd love to get my own dog. A shiba is a strong choice for me as I enjoy their loyal
+personality, but I'm open.
+
+Here's Emi, bugged that I exist, and that I do in fact want to pet her:
+![Alt](/cafe/emi.jpg)
+
+### Use My Lungs a Lot
+
+When I was in middle school, I ran cross country, in high school I used a bike to get around. In college (and even now)
+I walk most places. With a new pair of lungs, I want to take that all to a new level.
+I want to start running again and see if I can run the New York City Marathon with my friends and family.
+I'd like to ride a "Century" or 100 mile bike ride. I'd like to start using a bike as my main transportation method.
+I will be on medication that makes me feel like I'm starving so if I am going to be eating like an ultra-runner,
+I want to exercise like one. Weight lifting and getting my muscle mass up will be my first priority after transplant,
+and I'm shooting for 150 or 160lbs (68-72kg)
+
+## To Conclude
+
+While I've been waiting for the call, I've been spending quite a bit of time programming and reading at my favorite
+cafe, Espresso Vivace. In many ways it feels as though I'm on the edge of the universe, the outside looking in, just
+waiting to see if my fate contains a life inside of it or outside of it. It's scary! But by next year at this 
+time I should be nearly recovered and be living life fairly normally. I'm confident in my recovery ability and
+my team, and I'm excited for a new future!
 
 
