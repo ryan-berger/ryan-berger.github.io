@@ -1,14 +1,14 @@
 baseURL: "https://ryanberger.me/"
 title: Ryan Berger's Page
-paginate: 5
 theme: PaperMod
 
 enableRobotsTXT: true
-buildDrafts: false
-buildFuture: false
+buildDrafts: true
+buildFuture: true
 buildExpired: false
 
-googleAnalytics: UA-123-45
+pagination:
+    pagerSize: 5
 
 minify:
     disableXML: true
@@ -19,7 +19,6 @@ params:
     title: Ryan Berger's Page
     description: "Ryan Berger's portfolio and blog"
     keywords: [Blog, Portfolio]
-    author: Me
     author: ["Ryan Berger"] # multiple authors
     images: []
     DateFormat: "January 2, 2006"
@@ -104,6 +103,7 @@ menu:
           name: Blog
           url: /blog/
           weight: 10
+
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 # pygmentsUseClasses: true
 # markup:
