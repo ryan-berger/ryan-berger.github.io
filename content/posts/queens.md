@@ -1,6 +1,6 @@
 ---
 title: "Using SAT to Get the World Record on LinkedIn's Queens"
-date: 2025-05-23T17:00:00-07:00
+date: 2025-05-25T17:00:00-07:00
 searchHidden: false
 draft: true
 ---
