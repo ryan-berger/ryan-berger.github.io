@@ -4,16 +4,34 @@
     <title>Posts on Ryan Berger&#39;s Page</title>
     <link>https://ryanberger.me/posts/</link>
     <description>Recent content in Posts on Ryan Berger&#39;s Page</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 08 Jan 2022 17:34:30 -0700</lastBuildDate><atom:link href="https://ryanberger.me/posts/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.147.5</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 25 May 2025 17:00:00 -0700</lastBuildDate>
+    <atom:link href="https://ryanberger.me/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Hello World</title>
-      <link>https://ryanberger.me/posts/initial-posts/</link>
-      <pubDate>Sat, 08 Jan 2022 17:34:30 -0700</pubDate>
-      
-      <guid>https://ryanberger.me/posts/initial-posts/</guid>
-      <description>This is my first post!!!</description>
+      <title>Using SAT to Get the World Record on LinkedIn&#39;s Queens</title>
+      <link>https://ryanberger.me/posts/queens/</link>
+      <pubDate>Sun, 25 May 2025 17:00:00 -0700</pubDate>
+      <guid>https://ryanberger.me/posts/queens/</guid>
+      <description>&lt;p&gt;Did you know that LinkedIn has games? I sure as hell didn&amp;rsquo;t until my Dad
+showed me that they in fact have 5 (!) different games that you can play.&lt;/p&gt;
+&lt;p&gt;One of them stood out to me as somewhat interesting:&lt;/p&gt;
+&lt;p&gt;Queens
+&lt;img alt=&#34;LinkedIn&amp;rsquo;s Queens&#34; loading=&#34;lazy&#34; src=&#34;https://ryanberger.me/queens/queens.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Queens looks a lot like the classic logic problem, N-Queens. N-Queens asks
+&amp;ldquo;given an NxN board, can you place N queens such that no queen shares the same row, column, or diagonal
+(which is how a queen moves in chess)?&amp;rdquo;&lt;/p&gt;</description>
     </item>
-    
+    <item>
+      <title>Programming at a Cafe at the End of the Universe</title>
+      <link>https://ryanberger.me/posts/programming-at-cafe/</link>
+      <pubDate>Thu, 22 May 2025 17:00:00 -0700</pubDate>
+      <guid>https://ryanberger.me/posts/programming-at-cafe/</guid>
+      <description>&lt;p&gt;Hello! My name is Ryan Berger, I&amp;rsquo;m a 24-year-old software developer living in Seattle, WA. This is the first real post
+of my blog, and oh boy is it a doozy!&lt;/p&gt;
+&lt;p&gt;To cut it short: in the coming months, I will be undergoing a bilateral lung transplant at the University of Washington.&lt;/p&gt;
+&lt;p&gt;I have—since I was 13—known this was coming, but my lung function and blood tests show that I am not too far off
+from respiratory failure. My doctors have determined that I am in good shape and it is now time.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>
