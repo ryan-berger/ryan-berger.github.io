@@ -58,7 +58,7 @@ For each given cell, there are three different types of constraints on it:
 - It must be the only element that is true on the entire column
 - It must be the only element that is true on its two different diagonals
 
-My initial attempt to encode this was was write a formula for each cell describing 
+My initial attempt to encode this was to write a formula for each cell describing 
 all the cells it was _not_, thinking that somehow this would magically end up in a satisfiable formula.
 
 So, in this case we would say for a given cell:
@@ -184,7 +184,7 @@ XY..
 
 In this case, the only adjacency we'd be worried with colors X and Y is the diagonally adjacent (0, 0) -> (1,1).
 Since the number of edges with such a diagonal is small, we can just iterate over every cell on the board, 
-look at its diagonal neighbors and if they _aren't_ the same color then we will add them to a set for the cell.
+look at its diagonal neighbors, and if they _aren't_ the same color then we will add them to a set for the cell.
 
 The pseudo-code would be something like:
 ```python
