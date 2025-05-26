@@ -5,6 +5,8 @@ searchHidden: false
 draft: false
 ---
 
+_Special thanks to @tombh for proofing this blog post!_
+
 Did you know that LinkedIn has games? I sure as hell didn't until my Dad 
 showed me that they in fact have 5 (!) different games that you can play.
 
@@ -240,10 +242,9 @@ and from Z3 (wish I could say it was using Z3-wasm, but I had many [issues](http
 And I'm proud to report, that it did it 🎉
 
 I have become the conduit through which Z3 has proven itself smarter than 99% of CEOs and 99% of my fellow
-University of Utah alums
+University of Utah alums.
 
 {{<rawhtml>}}
 <video src="/queens/world-record.mp4" autoplay controls style="padding: var(--gap); width:calc(var(--main-width) - var(--gap) * 2)">
 {{</rawhtml>}}
-
 
