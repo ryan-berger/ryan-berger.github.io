@@ -1,20 +1,20 @@
 ---
 title: "Using SAT to Get the World Record on LinkedIn's Queens"
-date: 2025-05-25T17:00:00-07:00
+date: 2025-05-26T11:00:00-07:00
 searchHidden: false
-draft: true
+draft: false
 ---
 
 Did you know that LinkedIn has games? I sure as hell didn't until my Dad 
 showed me that they in fact have 5 (!) different games that you can play.
 
-One of them stood out to me as somewhat interesting:
+One of them stood out to me as somewhat interesting, Queens:
 
-Queens
-![LinkedIn's Queens](/queens/queens.png)
+![Solved Queens Board](/queens/queens.png)
+_Solved Queens board_
 
-Queens looks a lot like the classic logic problem, N-Queens. N-Queens asks
-"given an NxN board, can you place N queens such that no queen shares the same row, column, or diagonal
+Queens looks a lot like the classic logic problem, N-Queens ([a generalized version of 8-Queens](https://en.wikipedia.org/wiki/Eight_queens_puzzle)). 
+N-Queens asks "given an NxN board, can you place N queens such that no queen shares the same row, column, or diagonal
 (which is how a queen moves in chess)?"
 
 N-Queens is impossible for \\(N \leq 3\\), and for any greater N it can be solved via a backtracking algorithm 
@@ -84,14 +84,14 @@ for the row and column at each cell to contain "at most one" variable that is tr
 
 Thankfully, "at most one" is on the way to "exactly one." If we had "exactly one," it also must be the
 case that there be "at most one." What are we missing? "At least one." If we have "at least one" and "at most one,"
-then we end up with "exactly one." "At least one" is also very easy! It is just an or of all the cells.
+then we end up with "exactly one." "At least one" is also very easy! It is just an or (\\(\lor\\)) of all the cells.
 
 With this knowledge we can build a helper function \\(exactlyOne\\) and use it for each row and column:
 $$ 
 exactlyOne(\\{...\\}) = atMostOne(\\{...\\}) \wedge atLeastOne(\\{...\\})
 $$
 
-Where \\(atLeastOne\\) is all the elements (in the row, or column) or'ed, but \\(atMostOne\\) is a bit more complicated:
+Where \\(atLeastOne\\) is all the elements (in the row, or column) or'ed \\(\lor\\), but \\(atMostOne\\) is a bit more complicated:
 
 $$
 atMostOne(terms) = \bigwedge\limits_{i=0}^{N-1} (terms_{i} \implies (\bigwedge\limits_{j=i+1}^N \neg terms_{j}))
@@ -102,21 +102,21 @@ $$
 atMostOne(terms) = \bigwedge\limits_{0 \leq i<j \leq n} terms_i \implies \neg terms_j
 $$
 
-For each item in `terms`, it is implied that it is _not_ any of the following terms.
+For each item in \\(terms\\), it is implied that it is _not_ any of the following terms.
 
 ### An Aside
 
 This initially confused me as my first idea was that "given a cell, it implies all the cells in its group (row, column) are
-false". This would require the inner \\(\bigwedge\\) to start with \\(j=0, j\neq i\\) so that it gets all the other items of the group.
+false". This would require the inner \\(\bigwedge\\) to be bounded via \\(j=0, j\neq i\\) so that it gets all the other items of the group.
 You can get a good feel for why the above is more optimal though if you write it out when \\(n=2\\):
 $$
 (term_i \implies (\neg term_{i+1})) \land (term_{i+1} \implies (\neg term_i))
 $$
 
-Oops! The right-hand side of the \\(\land\\) is just the contrapostive, so it doesn't matter if it is there. A better way
-of seeing it is when you use a logical interpretation such as in the [N-Queens Lecture](https://www.cs.drexel.edu/~johnsojr/2017-18/fall/CS270/Lectures/8/sat.pdf). 
+Oops! The right-hand side of the \\(\land\\) is just the contrapositive, so you're and'ing (\\(\land\\)) a duplicate condition. 
+A better way of seeing it is when you use a logical interpretation such as in the [N-Queens Lecture](https://www.cs.drexel.edu/~johnsojr/2017-18/fall/CS270/Lectures/8/sat.pdf). 
 
-There, the multiple contrapositives will show up as duplicate pairs of ors that look like:
+There, the multiple contrapositives will show up as duplicate pairs of \\(\\lor\\)s that look like:
 $$
 (\neg term_i \lor \neg term_j) \land (\neg term_j \lor \neg term_i)
 $$
@@ -132,15 +132,15 @@ must have a queen, just that two queens should not share a diagonal.
 
 For example:
 ```
-..Q.
-Q...
-...Q
-.Q..
+. . Q X
+Q . X .
+. X . Q
+X Q . .
 ```
 
-Notice that the diagonal from the bottom left to the top right does not contain a queen. This is a gotcha we'll
-see in a moment, but the easy way to solve this with another existing function we have is the `atMostOne` constraint.
-It is true that there must only be `atMostOne` queen per diagonal.
+Notice that the diagonal denoted with X's does not have a queen. This is a gotcha we'll
+see in a moment, but the easy way to solve this with another existing function we have is the \\(atMostOne\\) constraint.
+It is true that there must only be \\(atMostOne\\) queen per diagonal.
 
 Now that we have all the building blocks, we can build the final formula:
 $$
@@ -176,13 +176,13 @@ placed on the same color, nor can they be placed on the same row or column. What
 Well, it only leaves us with the _adjacent diagonal_ of every cell that borders a different color. I will call this an "edge" 
 For example:
 ```
-XX..
-XY..
-....
-....
+X X . .
+X Y . .
+. . . .
+. . . .
 ```
 
-In this case, the only adjacency we'd be worried with colors X and Y is the diagonally adjacent (0, 0) -> (1,1).
+In this case, the only adjacency we'd be worried about with colors X and Y is the diagonally adjacent (0, 0) -> (1,1).
 Since the number of edges with such a diagonal is small, we can just iterate over every cell on the board, 
 look at its diagonal neighbors, and if they _aren't_ the same color then we will add them to a set for the cell.
 
@@ -230,12 +230,12 @@ $$
 
 ## Going for Gold
 
-After proving to myself that this worked via manually inputting queens games, it was time to put it to the test:
+After proving to myself that this worked via manually inputting Queens games, it was time to put it to the test:
 getting the world record on LinkedIn's Queens. SAT solvers are slow in the worst case, but it turns out that
 most problems aren't the worst case and Z3 solves this blazingly fast.
 
 It took some work to get a Firefox extension up and running with a small Python API to ferry the puzzle/solution to 
-and from Z3 (wish I could say it in Z3-js), and I had it working.
+and from Z3 (wish I could say it was using Z3-wasm, but I had many [issues](https://github.com/Z3Prover/z3/issues/7556)), and I had it working.
 
 And I'm proud to report, that it did it 🎉
 
