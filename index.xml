@@ -4,7 +4,7 @@
     <title>Ryan Berger&#39;s Page</title>
     <link>https://ryanberger.me/</link>
     <description>Recent content on Ryan Berger&#39;s Page</description>
-    <generator>Hugo -- 0.147.5</generator>
+    <generator>Hugo -- 0.147.6</generator>
     <language>en</language>
     <lastBuildDate>Mon, 26 May 2025 11:00:00 -0700</lastBuildDate>
     <atom:link href="https://ryanberger.me/index.xml" rel="self" type="application/rss+xml" />
@@ -14,14 +14,12 @@
       <pubDate>Mon, 26 May 2025 11:00:00 -0700</pubDate>
       <guid>https://ryanberger.me/posts/queens/</guid>
       <description>&lt;p&gt;&lt;em&gt;Special thanks to @tombh for proofing this blog post!&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Edit 5/28: added a link to the repo and corrected the solver I used&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Did you know that LinkedIn has games? I sure as hell didn&amp;rsquo;t until my Dad
 showed me that they in fact have 5 (!) different games that you can play.&lt;/p&gt;
 &lt;p&gt;One of them stood out to me as somewhat interesting, Queens:&lt;/p&gt;
 &lt;p&gt;&lt;img alt=&#34;Solved Queens Board&#34; loading=&#34;lazy&#34; src=&#34;https://ryanberger.me/queens/queens.png&#34;&gt;
-&lt;em&gt;Solved Queens board&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Queens looks a lot like the classic logic problem, N-Queens (&lt;a href=&#34;https://en.wikipedia.org/wiki/Eight_queens_puzzle&#34;&gt;a generalized version of 8-Queens&lt;/a&gt;).
-N-Queens asks &amp;ldquo;given an NxN board, can you place N queens such that no queen shares the same row, column, or diagonal
-(which is how a queen moves in chess)?&amp;rdquo;&lt;/p&gt;</description>
+&lt;em&gt;Solved Queens board&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Programming at a Cafe at the End of the Universe</title>
