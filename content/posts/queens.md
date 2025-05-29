@@ -7,6 +7,8 @@ draft: false
 
 _Special thanks to @tombh for proofing this blog post!_
 
+_Edit 5/28: added a link to the repo and corrected the solver I used_
+
 Did you know that LinkedIn has games? I sure as hell didn't until my Dad 
 showed me that they in fact have 5 (!) different games that you can play.
 
@@ -213,9 +215,9 @@ Without much thinking, I initially pulled out \\(exactlyOne\\). However, in doin
 the solution _must_ contain a queen in one of the spots that have an adjacency. This will work for a very small subset
 of Queens games (which I found out the hard way).
 
-Instead, like diagonals in N-Queens, we just need to make sure that there is `atMostOne` item in the adjacent grouping.
+Instead, like diagonals in N-Queens, we just need to make sure that there is \\(atMostOne\\) item in the adjacent grouping.
 
-Because I'm lazy, the above code isn't particularly careful about generating duplicate `atMostOne` constraints.
+Because I'm lazy, the above code isn't particularly careful about generating duplicate \\(atMostOne\\) constraints.
 Using the previous example, both `(0, 0) -> {(1,1)}` and `(1,1) -> {(0,0)}` would be in `result`, meaning that
 an implication will get generated both ways.
 
@@ -234,14 +236,14 @@ $$
 
 After proving to myself that this worked via manually inputting Queens games, it was time to put it to the test:
 getting the world record on LinkedIn's Queens. SAT solvers are slow in the worst case, but it turns out that
-most problems aren't the worst case and Z3 solves this blazingly fast.
+most problems aren't the worst case and CVC5 solves this blazingly fast.
 
-It took some work to get a Firefox extension up and running with a small Python API to ferry the puzzle/solution to 
-and from Z3 (wish I could say it was using Z3-wasm, but I had many [issues](https://github.com/Z3Prover/z3/issues/7556)), and I had it working.
+It took some work to get a Firefox extension up and running with a small [Python API](https://github.com/ryan-berger/queens/blob/master/main.py) to ferry the puzzle/solution to 
+and from CVC5 (wish I could say it was using Z3-wasm, but I had many [issues](https://github.com/Z3Prover/z3/issues/7556)), and I had it working.
 
 And I'm proud to report, that it did it 🎉
 
-I have become the conduit through which Z3 has proven itself smarter than 99% of CEOs and 99% of my fellow
+I have become the conduit through which CVC5 has proven itself smarter than 99% of CEOs and 99% of my fellow
 University of Utah alums.
 
 {{<rawhtml>}}
