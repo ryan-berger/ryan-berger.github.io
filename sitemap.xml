@@ -2,11 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://ryanberger.me/posts/ghost-at-your-own-transplant/</loc>
+    <lastmod>2025-07-23T19:10:00-07:00</lastmod>
+  </url><url>
     <loc>https://ryanberger.me/posts/</loc>
-    <lastmod>2025-05-26T11:00:00-07:00</lastmod>
+    <lastmod>2025-07-23T19:10:00-07:00</lastmod>
   </url><url>
     <loc>https://ryanberger.me/</loc>
-    <lastmod>2025-05-26T11:00:00-07:00</lastmod>
+    <lastmod>2025-07-23T19:10:00-07:00</lastmod>
   </url><url>
     <loc>https://ryanberger.me/posts/queens/</loc>
     <lastmod>2025-05-26T11:00:00-07:00</lastmod>
