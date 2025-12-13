@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Ryan Berger&#39;s Page</title>
-    <link>https://ryanberger.me/</link>
+    <link>https://ryan.berge.rs/</link>
     <description>Recent content on Ryan Berger&#39;s Page</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en</language>
     <lastBuildDate>Wed, 23 Jul 2025 19:10:00 -0700</lastBuildDate>
-    <atom:link href="https://ryanberger.me/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://ryan.berge.rs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ghost At Your Own Transplant</title>
-      <link>https://ryanberger.me/posts/ghost-at-your-own-transplant/</link>
+      <link>https://ryan.berge.rs/posts/ghost-at-your-own-transplant/</link>
       <pubDate>Wed, 23 Jul 2025 19:10:00 -0700</pubDate>
-      <guid>https://ryanberger.me/posts/ghost-at-your-own-transplant/</guid>
+      <guid>https://ryan.berge.rs/posts/ghost-at-your-own-transplant/</guid>
       <description>&lt;p&gt;Monday night at 4pm I was spending time with my girlfriend for the last few moments of her trip
 when I received a phone call from a &amp;ldquo;Private Number&amp;rdquo;. She was about to head to the airport when I
 got wide-eyed and said I needed to answer a call. I knew this was likely to be a call
@@ -22,22 +22,22 @@ for me. At 7pm I had a call with them confirming that this was the case.&lt;/p&g
     </item>
     <item>
       <title>Using SAT to Get the World Record on LinkedIn&#39;s Queens</title>
-      <link>https://ryanberger.me/posts/queens/</link>
+      <link>https://ryan.berge.rs/posts/queens/</link>
       <pubDate>Mon, 26 May 2025 11:00:00 -0700</pubDate>
-      <guid>https://ryanberger.me/posts/queens/</guid>
+      <guid>https://ryan.berge.rs/posts/queens/</guid>
       <description>&lt;p&gt;&lt;em&gt;Special thanks to @tombh for proofing this blog post!&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Edit 5/28: added a link to the repo and corrected the solver I used&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Did you know that LinkedIn has games? I sure as hell didn&amp;rsquo;t until my Dad
 showed me that they in fact have 5 (!) different games that you can play.&lt;/p&gt;
 &lt;p&gt;One of them stood out to me as somewhat interesting, Queens:&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;Solved Queens Board&#34; loading=&#34;lazy&#34; src=&#34;https://ryanberger.me/queens/queens.png&#34;&gt;
+&lt;p&gt;&lt;img alt=&#34;Solved Queens Board&#34; loading=&#34;lazy&#34; src=&#34;https://ryan.berge.rs/queens/queens.png&#34;&gt;
 &lt;em&gt;Solved Queens board&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Programming at a Cafe at the End of the Universe</title>
-      <link>https://ryanberger.me/posts/programming-at-cafe/</link>
+      <link>https://ryan.berge.rs/posts/programming-at-cafe/</link>
       <pubDate>Thu, 22 May 2025 17:00:00 -0700</pubDate>
-      <guid>https://ryanberger.me/posts/programming-at-cafe/</guid>
+      <guid>https://ryan.berge.rs/posts/programming-at-cafe/</guid>
       <description>&lt;p&gt;Hello! My name is Ryan Berger, I&amp;rsquo;m a 24-year-old software developer living in Seattle, WA. This is the first real post
 of my blog, and oh boy is it a doozy!&lt;/p&gt;
 &lt;p&gt;To cut it short: in the coming months, I will be undergoing a bilateral lung transplant at the University of Washington.&lt;/p&gt;
