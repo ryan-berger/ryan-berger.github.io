@@ -2,13 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://ryan.berge.rs/posts/ghost-at-your-own-transplant/</loc>
-    <lastmod>2025-07-23T19:10:00-07:00</lastmod>
+    <loc>https://ryan.berge.rs/posts/total-viewshed-algorithm/</loc>
+    <lastmod>2026-02-01T20:10:00-07:00</lastmod>
   </url><url>
     <loc>https://ryan.berge.rs/posts/</loc>
-    <lastmod>2025-07-23T19:10:00-07:00</lastmod>
+    <lastmod>2026-02-01T20:10:00-07:00</lastmod>
   </url><url>
     <loc>https://ryan.berge.rs/</loc>
+    <lastmod>2026-02-01T20:10:00-07:00</lastmod>
+  </url><url>
+    <loc>https://ryan.berge.rs/posts/lines-of-sight/</loc>
+    <lastmod>2026-01-31T19:10:00-07:00</lastmod>
+  </url><url>
+    <loc>https://ryan.berge.rs/posts/ghost-at-your-own-transplant/</loc>
     <lastmod>2025-07-23T19:10:00-07:00</lastmod>
   </url><url>
     <loc>https://ryan.berge.rs/posts/queens/</loc>

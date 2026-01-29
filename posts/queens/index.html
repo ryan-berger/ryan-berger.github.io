@@ -86,7 +86,7 @@ X Y . .
 . . . .
 </code></pre><p>In this case, the only adjacency we&rsquo;d be worried about with colors X and Y is the diagonally adjacent (0, 0) -> (1,1).
 Since the number of edges with such a diagonal is small, we can just iterate over every cell on the board,
-look at its diagonal neighbors, and if they <em>aren&rsquo;t</em> the same color then we will add them to a set for the cell.</p><p>The pseudo-code would be something like:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>Pair <span style=color:#f92672>=</span> Tuple[int, int]
+look at its diagonal neighbors, and if they <em>aren&rsquo;t</em> the same color then we will add them to a set for the cell.</p><p>The pseudo-code would be something like:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>Pair <span style=color:#f92672>=</span> Tuple[int, int]
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_diagonal_neighbors</span>(i: int, j: int, n: int) <span style=color:#f92672>-&gt;</span> List[Pair]
 </span></span><span style=display:flex><span>
@@ -116,8 +116,7 @@ $$</p><h2 id=going-for-gold>Going for Gold<a hidden class=anchor aria-hidden=tru
 getting the world record on LinkedIn&rsquo;s Queens. SAT solvers are slow in the worst case, but it turns out that
 most problems aren&rsquo;t the worst case and CVC5 solves this blazingly fast.</p><p>It took some work to get a Firefox extension up and running with a small <a href=https://github.com/ryan-berger/queens/blob/master/main.py>Python API</a> to ferry the puzzle/solution to
 and from CVC5 (wish I could say it was using Z3-wasm, but I had many <a href=https://github.com/Z3Prover/z3/issues/7556>issues</a>), and I had it working.</p><p>And I&rsquo;m proud to report, that it did it 🎉</p><p>I have become the conduit through which CVC5 has proven itself smarter than 99% of CEOs and 99% of my fellow
-University of Utah alums.</p><video src=/queens/world-record.mp4 autoplay controls style="padding:var(--gap);width:calc(var(--main-width) - var(--gap) * 2)"></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=prev href=https://ryan.berge.rs/posts/ghost-at-your-own-transplant/><span class=title>« Prev</span><br><span>Ghost At Your Own Transplant</span>
-</a><a class=next href=https://ryan.berge.rs/posts/programming-at-cafe/><span class=title>Next »</span><br><span>Programming at a Cafe at the End of the Universe</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2025 <a href=https://ryan.berge.rs/>Ryan Berger's Page</a></span> ·
+University of Utah alums.</p><video src=/queens/world-record.mp4 autoplay controls style="padding:var(--gap);width:calc(var(--main-width) - var(--gap) * 2)"></div><footer class=post-footer><ul class=post-tags></ul></footer></article></main><footer class=footer><span>&copy; 2026 <a href=https://ryan.berge.rs/>Ryan Berger's Page</a></span> ·
 <span>Powered by
 <a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
 <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentColor"><path d="M12 6H0l6-6z"/></svg>

@@ -4,10 +4,36 @@
     <title>Ryan Berger&#39;s Page</title>
     <link>https://ryan.berge.rs/</link>
     <description>Recent content on Ryan Berger&#39;s Page</description>
-    <generator>Hugo -- 0.152.2</generator>
+    <generator>Hugo -- 0.155.0</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 23 Jul 2025 19:10:00 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 20:10:00 -0700</lastBuildDate>
     <atom:link href="https://ryan.berge.rs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Finding The Longest Line of Sight With CacheTVS</title>
+      <link>https://ryan.berge.rs/posts/total-viewshed-algorithm/</link>
+      <pubDate>Sun, 01 Feb 2026 20:10:00 -0700</pubDate>
+      <guid>https://ryan.berge.rs/posts/total-viewshed-algorithm/</guid>
+      <description>&lt;p&gt;&lt;em&gt;Welcome all readers from the finding the longest line of sight post&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The past 6 months of my almost every moment of my free time has been spent developing an algorithm with my friend
+Tom Buckley-Houston to exhaustively prove that we&amp;rsquo;ve found the longest line of sight. We both felt it was very
+doable algorithmically, but current options looked extremely computationally intensive.&lt;/p&gt;
+&lt;p&gt;Since the inception of the project, through hard work and collaboration we have been able to speed up the calculations
+by hundreds of times, and make it entirely feasible on top-of-the-line CPUs such as the AMD Turin.
+Please enjoy the deep dive, and make sure to check out &lt;a href=&#34;https://alltheviews.world&#34;&gt;https://alltheviews.world&lt;/a&gt; for the final product!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Finding the Longest Line of Sight</title>
+      <link>https://ryan.berge.rs/posts/lines-of-sight/</link>
+      <pubDate>Sat, 31 Jan 2026 19:10:00 -0700</pubDate>
+      <guid>https://ryan.berge.rs/posts/lines-of-sight/</guid>
+      <description>&lt;p&gt;One fateful day I was browsing a tech forum, &lt;a href=&#34;https://lobste.rs&#34;&gt;lobste.rs&lt;/a&gt;, and stumbled upon a message that would captivate me for 6 months.&lt;/p&gt;
+&lt;p&gt;My good friend &lt;a href=&#34;https://tombh.co.uk&#34;&gt;Tom Buckley-Houston&lt;/a&gt;, posted in a &lt;a href=&#34;https://lobste.rs/s/2ftfd1/what_are_you_doing_this_week#c_uiub1p&#34;&gt;&amp;ldquo;what are you working on this week&amp;rdquo; thread&lt;/a&gt;
+that he was working on algorithmically finding the longest line of sight in the world. In other words, how far from a (likely) very tall
+point can you see another (likely) tall point?&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;Well Ryan,&amp;rdquo; you may be saying, &amp;ldquo;isn&amp;rsquo;t this a solved problem? &lt;a href=&#34;https://www.summitpost.org/phpBB3/longest-lines-of-sight-photographed-t44409-150.html&#34;&gt;It&amp;rsquo;s somewhere between Russia and China&lt;/a&gt;&amp;rdquo;
+and I would say: &amp;ldquo;have you explored the entire earth yet?&amp;rdquo; It took a lot of very good sleuths to find the theoretical
+longest line of sight, but we haven&amp;rsquo;t exhaustively proven there can&amp;rsquo;t be any longer, have we?&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Ghost At Your Own Transplant</title>
       <link>https://ryan.berge.rs/posts/ghost-at-your-own-transplant/</link>
