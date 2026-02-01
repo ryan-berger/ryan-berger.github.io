@@ -4,22 +4,25 @@
     <title>Posts on Ryan Berger&#39;s Page</title>
     <link>https://ryan.berge.rs/posts/</link>
     <description>Recent content in Posts on Ryan Berger&#39;s Page</description>
-    <generator>Hugo -- 0.155.0</generator>
+    <generator>Hugo -- 0.155.1</generator>
     <language>en</language>
     <lastBuildDate>Sun, 01 Feb 2026 20:10:00 -0700</lastBuildDate>
     <atom:link href="https://ryan.berge.rs/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Finding The Longest Line of Sight With CacheTVS</title>
+      <title>A Total Viewshed Algorithm to Find the Longest Line of Sight</title>
       <link>https://ryan.berge.rs/posts/total-viewshed-algorithm/</link>
       <pubDate>Sun, 01 Feb 2026 20:10:00 -0700</pubDate>
       <guid>https://ryan.berge.rs/posts/total-viewshed-algorithm/</guid>
-      <description>&lt;p&gt;&lt;em&gt;Welcome all readers from the finding the longest line of sight post&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;The past 6 months of my almost every moment of my free time has been spent developing an algorithm with my friend
-Tom Buckley-Houston to exhaustively prove that we&amp;rsquo;ve found the longest line of sight. We both felt it was very
+      <description>&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Welcome all readers from the &lt;a href=&#34;../lines-of-sight&#34;&gt;non-technical lines of sight post&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The past 6 months of almost every moment of my free time has been spent developing an algorithm with my friend
+Tom Buckley-Houston to exhaustively prove that we&amp;rsquo;ve found the longest line of sight in the world. We both felt it was very
 doable algorithmically, but current options looked extremely computationally intensive.&lt;/p&gt;
 &lt;p&gt;Since the inception of the project, through hard work and collaboration we have been able to speed up the calculations
 by hundreds of times, and make it entirely feasible on top-of-the-line CPUs such as the AMD Turin.
-Please enjoy the deep dive, and make sure to check out &lt;a href=&#34;https://alltheviews.world&#34;&gt;https://alltheviews.world&lt;/a&gt; for the final product!&lt;/p&gt;</description>
+Please enjoy the deep dive, and make sure to check out &lt;a href=&#34;https://tombh.co.uk/longest-line-of-sight&#34;&gt;Tom&amp;rsquo;s sister blogpost&lt;/a&gt;
+and &lt;a href=&#34;https://alltheviews.world&#34;&gt;https://alltheviews.world&lt;/a&gt; for the final product!&lt;/p&gt;</description>
     </item>
     <item>
       <title>Finding the Longest Line of Sight</title>
