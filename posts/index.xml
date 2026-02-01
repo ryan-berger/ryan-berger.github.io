@@ -17,7 +17,7 @@
 &lt;p&gt;&lt;em&gt;Welcome all readers from the &lt;a href=&#34;../lines-of-sight&#34;&gt;non-technical lines of sight post&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;The past 6 months of almost every moment of my free time has been spent developing an algorithm with my friend
-Tom Buckley-Houston to exhaustively prove that we&amp;rsquo;ve found the longest line of sight in the world. We both felt it was very
+&lt;a href=&#34;https://tombh.co.uk&#34;&gt;Tom Buckley-Houston&lt;/a&gt; to exhaustively prove that we&amp;rsquo;ve found the longest line of sight in the world. We both felt it was very
 doable algorithmically, but current options looked extremely computationally intensive.&lt;/p&gt;
 &lt;p&gt;Since the inception of the project, through hard work and collaboration we have been able to speed up the calculations
 by hundreds of times, and make it entirely feasible on top-of-the-line CPUs such as the AMD Turin.
