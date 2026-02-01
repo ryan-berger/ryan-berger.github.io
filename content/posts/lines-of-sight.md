@@ -210,7 +210,7 @@ how tall it is, just the angle.
 ### Angle Visibility
 
 Now that we can very quickly - and in parallel - calculate the angles in our line of sight, we need to determine if a particular
-point is visible. To do this in parallel we calculate the "inclusive prefix maximum" which is a list where each point gets
+point is visible. To do this in parallel we calculate the "exclusive prefix maximum" which is a list where each point gets
 an item calculated from the highest of _all_ previous angles. This way, each surveyor can determine whether itself is visible to the observer.
 
 More concretely, here's our angles between our surveyors (excuse my straight lines):
@@ -257,7 +257,8 @@ And how fast is it? _Screaming fast_.
 Running it on my old i9900k CPU with 128GB of DDR4 RAM results in a drastic speedup. It went from Everest taking
 12 hours on a GPU with Tom's original implementation, to _**57 minutes**_  on my CPU - something much less powerful. WOW.
 
-When I run it on a top of the line machines, I can cut that down to _**12 minutes flat**_. Bonkers.
+When I run it on a top of the line machines, I can cut that down to _**4 and a half minutes flat**_. A 160x speed up.
+Bonkers.
 
 Running it for all 2500 tiles took about 18 hours with 5 very large machines that Tom and I rented.
 
