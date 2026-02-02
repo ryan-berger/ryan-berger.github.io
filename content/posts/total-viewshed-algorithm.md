@@ -8,12 +8,12 @@ draft: true
 > _Welcome all readers from the [non-technical lines of sight post](../lines-of-sight)_
 
 The past 6 months of almost every moment of my free time has been spent developing an algorithm with my friend 
-[Tom Buckley-Houston](https://tombh.co.uk) to exhaustively prove that we've found the longest line of sight in the world. We both felt it was very 
-doable algorithmically, but current options looked extremely computationally intensive.
+[Tom Buckley-Houston](https://tombh.co.uk) to exhaustively prove that we've found the longest line of sight in the world. 
+We both felt it was very doable algorithmically, but current options looked extremely computationally intensive.
 
-Since the inception of the project, through hard work and collaboration we have been able to speed up the calculations
+Since the inception of the project, through hard work and collaboration, we have been able to speed up the calculations
 by hundreds of times, and make it entirely feasible on top-of-the-line CPUs such as the AMD Turin. 
-Please enjoy the deep dive, and make sure to check out [Tom's sister blogpost](https://tombh.co.uk/longest-line-of-sight) 
+Please enjoy the deep dive, and make sure to check out [Tom's sister-blogpost](https://tombh.co.uk/longest-line-of-sight) 
 and [https://alltheviews.world](https://alltheviews.world) for the final product!
 
 ## The Total Viewshed Algorithm
@@ -46,16 +46,17 @@ Line of sight visibility calculations are entirely boolean (is the point visible
 two-dimensional. To make this three-dimensional slice of space two-dimensional, we use an azimuthal projection to 
 project our observer into a two-dimensional space.
 
-(INSERT GRAPHIC OF OBSERVER)
+{{< figure src="/lines-technical/observer.png" align=center caption="Yes, 'azimuthal projection' is just a fancy way of describing the Google Map Guy&trade;'s POV">}}
 
 The elevations "in front of" the observer on the y-axis, distance on the x. The line of sight may lie between 
 two elevations so an interpolated value is chosen and a "band" of sight is also chosen, meaning the observer sees
 exactly one point at a time.
 
-(INSERT ANGLE GRAPHIC)
+{{< figure src="/lines-technical/observer_angle.png" align=center >}}
 
 The angle of elevation between two points must also take into account the curvature of the earth,
-along with the refraction of light. The equation for the adjusted elevation is given by the following equation [[1](https://pro.arcgis.com/en/pro-app/3.4/tool-reference/3d-analyst/how-line-of-sight-works.htm)]:
+along with the refraction of light. The equation for adjusting the elevation for both is given by 
+the following [equation](https://pro.arcgis.com/en/pro-app/3.4/tool-reference/3d-analyst/how-line-of-sight-works.htm):
 
 $$
 E^\prime = E + (D^2(R - 1) / d_{earth}); \newline
@@ -82,20 +83,21 @@ Where \\(h_{pov}\\) is the height of the observer.
 
 Once the elevations are laid out, we can determine visibility for each point along the line of sight.
 A point is visible to the observer if the angle of elevation between the observer and the point is greater than all
-the previous angles of elevation of closer points. The angle between the point of view and itself \\(-\infty\\) since there is
+the angles of previous points. The angle between the point of view and itself \\(-\infty\\) since there is
 "no angle" and we want all angles to be greater than it.
 
-(INSERT PREFIX MAX GRAPHIC)
+{{< figure src="/lines-technical/prefix_angles.png" align=center >}}
 
-Rotating this line of sight calculation around for a point for all 360 degrees will give you 360 different bitmaps 
-of which points are visible, which you can then use to construct a viewshed. Tada!
+
+Rotating this line of sight calculation around for all the terrain within the worst case line of sight for a given point 
+will give you 360 different bitmaps of which points are visible. You can use those to construct a viewshed. Tada!
 
 ### Total Viewsheds
 
-Now that we have line of sight visibility down, we can move on to the meat, the total viewshed.
+Now that we have line of sight visibility down, we can move on to the meat and potatoes, the total viewshed.
 
 There isn't a ton of literature existing for calculating total viewsheds for large maps. However, there are a few
-prolific authors in the total viewshed space who have published many papers namely Tabik et al. My friend Tom
+prolific authors in the total viewshed space who have published many papers. Namely, Tabik et al. My friend Tom
 read their initial [total viewshed paper](https://ieeexplore.ieee.org/document/6837455) back in 2017 while researching 
 how to find the longest line of sight, which had been a dream of his.
 
@@ -104,12 +106,12 @@ Their approach makes use of Linear Algebra to find the closest points to a norma
 so they can determine which points to sample along the line of sight visibility calculation. In the paper they call
 this "sector ordering".
 
-(INSERT GRAPHIC ABOUT SECTOR DISTANCES)
+{{< figure src="/lines-technical/sector_distances.png" align=center >}}
 
-Sector distances are not necessarily uniform from point to point (effectively making a potential zigzag) along the line 
+Sector distances are not necessarily uniform from point to point (even potentially zig-zagging) along the line 
 of sight so they must also be kept track of.
 
-(INSERT GRAPHIC ABOUT ZIGZAG)
+{{< figure src="/lines-technical/zigzag.png" align=center caption="This line of sight zigzags">}}
 
 They construct the line of sight projection using a linked list container like so:
 
@@ -123,8 +125,8 @@ struct node {
 ```
 
 The linked list elevation data isn't a copy of the elevation data, it is a pointer to it. 
-This then gets shipped off to a GPU for visibility calculation. The linked list gets reconstructed for every line of
-sight for every point and angle duplicating a ton of work.
+This then gets shipped off to a GPU for visibility calculation. The linked list and sector distances get reconstructed
+for every line of sight for every point and angle duplicating a ton of work.
 
 Very quickly Tom found that the linked list is Not A Good Idea&trade;. In fact, the maximum line of sight is always
 going to have some upper bound, so we can pre-allocate an array of that size. Rather than pointers, Tom calculated
@@ -134,21 +136,31 @@ Tom also was able to make a parallel array for the sector distance. This way you
 you use the distance from the sector distance array, and then you are able to calculate the angle to the point along the
 line of sight.
 
-Those offsets stay the same for every angle, so Tom only ever had to calculate them once rather for each point like the paper.
+Those offsets stay the same for every angle, so Tom only ever had to calculate them once rather for each point like the 
+other paper.
 
-(INSERT DELTA GRAPHIC)
+{{< figure src="/lines-technical/delta.png" align=center caption="Deltas are really just vectors you can add to get where you're going">}}
 
 With deltas, you take your point of view's index, add the delta, and it gives you the index into the DEM of your
-next point corresponding to your projected line of sight for that angle. Do this for every point for every angle and 
-you have a total viewshed. No linked list or pointers involved. 
+next point along your line of sight. Do this for every point for every angle and you have a total viewshed. No linked 
+list or pointer indirection involved. 
 
-Tom left his improvements on the back burner for a few years until July 2025 when he started porting it to Rust.
+Tom left his improvements on the back burner for 8 years until July 2025 when he started porting it to Rust. 
+
+Enter, me.
 
 ### Crazy Initial Estimates
 
-Tom's initial runs showed that running all of Everest took about 12 hours at a measly 600km worst case
-line of sight. Tom theorized that the actual worst case line of sight was 800km, which meant that
-with an algorithm that has to check a DEM which has \\(n \times n\\) elevations, and you check a total of
+Tom's initial runs showed that running all of Everest took about 12 hours at a 600km worst case
+line of sight. For all our tests determined this was a good estimate, and it was very unlikely that there is
+actually a line of sight longer than 600km due to earth curvature and obstructions. Our first test runs didn't show any
+lines of sight over 400km, confirming this was a safe bet. Once it came time to do the whole world though, this wouldn't do.
+
+> For more on why there's such a gap between the worst case line of sight and the actual longest line of 
+> sight check out [this section](https://tombh.co.uk/packing-world-lines-of-sight) in Tom's blogpost.
+
+Tom theorized that the actual worst case line of sight was 800km, which meant that
+with an algorithm that has to check a DEM which has \\(n \times n\\) elevations, and checking a total of
 \\(n\\) elevations along your line of sight for 360 angles, you are looking at potentially taking almost 2.4x longer
 with a 1.3x longer worst case line of sight.
 
@@ -165,10 +177,9 @@ is effectively a single viewshed algorithm applied for every point. Not exactly 
 The points are not processed in any particular order, meaning that while you are working from
 left to right within the DEM, you are likely accessing completely different elevations.
 
-(INSERT GRAPHIC OF DIAGONAL 45 DEGREE)
+{{< figure src="/lines-technical/diagonal.png" align=center >}}
 
-This effectively benchmarks your processors prefetcher with the number of cache misses you'll incur, not the line of
-sight calculation.
+This effectively benchmarks your processor's prefetcher with the number of cache misses you'll incur, not the FLOPs.
 
 How bad are these cache misses? Well, the elevation data we have is at a resolution of 100m. For our lower-than-needed
 upper bound of 600km for Mount Everest's we are talking 36 million elevations. Those elevations are stored as i16s 
@@ -184,7 +195,8 @@ However, this falls flat on its face very quickly for a very simple reason: a li
 of memory. By accessing non-contiguous memory you may be loading _some_ of the data into cache, but most of it is 
 not being used in the line of sight calculation.
 
-(INSERT CACHE WASTE)
+{{< figure src="/lines-technical/cache_waste.png" align=center caption="All the red bars are the full cache line of points your CPU fetches when asked to load the green points">}}
+
 
 In fact, in the worst case, since elevation data is stored as an `i16` you are wasting 96% of a 64 byte cache line. OUCH.
 
@@ -198,35 +210,35 @@ as particularly interesting. Not only were lines of sight much faster to calcula
 deltas showed that they create perfectly diagonal lines from the point of view and going across the DEM. 
 The distances were also entirely uniform between points.
 
-(INSERT DIAGONAL LINES)
-
 Since these lines are perfectly straight, why couldn't I make them entirely contiguous in memory and process the lines 
 of sight from left to right instead of corner to corner?
 
-(INSERT ROTATED SQUARE)
+{{< figure src="/lines-technical/rotated.png" align=center >}}
 
 This looked absolutely too good to be true! Surely rotating the map only works for some points but not all. And maybe
 it gets strange at angles that aren't divisible by 45 and the whole idea is dead in the water? Would the distances
-be able to stay continuous? After wondering if this was doable or missing points, Tom and I sat down and generated this image:
+be able to stay continuous? After wondering if this was doable or missing points, Tom and I sat down convinced ourselves
+that this was possible and generated this image:
 
-(INSERT ROTATED LOGO)
+{{< figure src="/lines-technical/logo.png" align=center caption="A circle seen forming in the center of the DEM from all the rotations">}}
 
-Tom had already noticed that the original authors were only calculating lines of sight internally to the viewshed.
+
+Tom had already noticed that the original authors were only calculating lines of sight internally to the DEM.
 When it came to calculating the full line of sight for every point they stopped short, mentioning it as a limitation
-of the algorithm.
+of the algorithm. This results in very few full viewsheds actually being valid.
 
 However, if you have 3x the data padding the tile, all lines of sight will be able to be calculated for lines
 of sight for all angles. While messing with rotations, we realized that only 2 times the data is required for computing 
-the line of sight per angle. Instead of rotating the enitre DEM, we only need to rotate a rectangular portion, 
+the line of sight per angle. Instead of rotating the entire DEM, we only need to rotate a rectangular portion, 
 which we nick-named the "chocolate bar"
 
-(INSERT CHOCOLATE BAR)
+{{< figure src="/lines-technical/chocolate_bar.png" align=center caption="A chocolate bar in all its glory">}}
 
 The square tiles were now outliving their usefulness. When rotating the rectangle, it sometimes "juts" outside 
 the DEM, meaning we don't have the data for it. We nick-named these "dolphins" because they create little triangles
-when overlaid with the DEM. 
+when overlaid with the DEM that look like a dolphin's top fin.
 
-(INSERT DOLPHINS)
+{{< figure src="/lines-technical/dolphin.png" align=center width="100%" caption="A dolphin fin">}}
 
 Dolphins occur because squares don't have infinite rotational symmetry so stuffing a rotated tile back into a square causes
 it to be cut off. To fix this, we can just use circular tiles. The total viewshed is still padded with 3x the data,
@@ -237,23 +249,66 @@ The deltas and sector distances are dead! Viva la Rotación!
 ### The Stars (Mostly) Align
 
 Now that we rotate the map, we completely front-load all our cache misses and perfectly align our data for our 
-one-direction line of sight calculations. This all incurs only a one-second penalty for even the biggest DEMs. A huge win.
+line of sight calculations. Of course, this is all unidirectional as we are only calculating the line of sight for all
+points at a single angle. This rotation itself incurs roughly a one-second penalty for even the biggest DEMs. A huge win.
 
 Cutting down the amount of data ends up meaning we can fit multiple widths worth of the DEM into L1 for calculation. 
 Another HUGE win.
 
 There is one downside that bears mentioning: when calculating the rotated coordinates for an elevation it may not fall 
 between a single elevation evenly. You have to interpolate some elevation there so that a line of sight
-calculation can be performed and not just have missing data. 
+calculation can be performed and not just have missing data. This is called _rasterization_.
 
-(INSERT RASTERIZATION GRAPHIC)
+{{< figure src="/lines-technical/rasterization.png" align=center caption="A rasterized triangle, courtesy of [scratchpixel](https://www.scratchapixel.com/lessons/3d-basic-rendering/rasterization-practical-implementation/rasterization-stage.html)">}}
 
-We chose the "nearest neighbor" interpolation algorithm because it is extremely easy to implement and is considered to be within the acceptable margins of error established in the academic viewshed literature (See Siham Tabik et al in _Efficient Data Structure and Highly Scalable Algorithm for Total-Viewshed Computation_ https://ieeexplore.ieee.org/document/6837455).
+We chose the "nearest neighbor" interpolation algorithm because it is extremely easy to implement and is considered to
+be within the acceptable margins of error established in the academic viewshed literature (See Siham Tabik et al. in 
+_Efficient Data Structure and Highly Scalable Algorithm for Total-Viewshed Computation_
+https://ieeexplore.ieee.org/document/6837455).
 
 Attempting to make rotation a function mapping coordinates from the unrotated image onto to the rotated one also runs 
 into trouble. Streaks will be unfilled because it isn't guaranteed there is a one to one mapping of coordinates when
-there is rounding involved. This is simply solved by doing an "anti rotation". 
-Looping over all the points of the output image, and choosing the closest one in the input.
+there is rounding involved. Mathematically, we can see this because rotated points aren't guaranteed to be unique
+due to \\(\lfloor(x, y)\rceil\\) meaning this function isn't one to one:
+
+$$
+rotate(x, y, \theta):
+\begin{bmatrix}
+cos \theta & -sin \theta \\\
+sin \theta & cos \theta
+\end{bmatrix}
+\begin{bmatrix}
+x \\\
+y
+\end{bmatrix}
+$$
+
+$$
+DEM = \\{ 0 \le  x < DEM_{width}; 0 \le y < DEM_{width} \mid (x, y)  \\}
+$$
+
+$$
+DEM_{rotated} = \\{(x, y) \in DEM \mid \lfloor rotate(x, y, \theta) \rceil \\}
+$$
+
+$$
+DEM \cap DEM_{rotated} \neq DEM
+$$
+
+
+This is solved by doing an "anti rotation". Looping over all the points of the output image, and choosing the closest 
+coordinate in the input.
+
+$$
+anti\\_rotate(x, y, \theta): rotate(x, y, -\theta)
+$$
+
+$$
+DEM_{rotated} = [ 0 \le  x < DEM_{width}; 0 \le y < DEM_{width} \mid DEM[\lfloor anti\\_rotate(x, y, \theta) \rceil] ]
+$$
+
+Now it is guaranteed there's a point in \\(DEM_{rotated}\\) for every \\((x, y)\\) but it isn't guaranteed to be unique.
+This is fine for our purposes.
 
 ## A Brief Intermission
 
@@ -292,6 +347,8 @@ The viewshed bitmaps are the boolean visibility computations out to the worst ca
 We mainly only use the first two, as we calculated that storing the viewshed bitmap for Everest would be a few Terabytes
 worth of information, and it doesn't actually give us anything extra. The world would be many Petabytes. We really only need a 
 visualization of how much area each point can see, and of course the longest line of sight.
+
+> Also, we personally don't have hard drives big enough :(
 
 In total, we use exactly 8 times the amount of data of a single DEM which is entirely feasible and only around
 200GB for the entire world.
@@ -358,15 +415,16 @@ fn line_of_sight(pov_height: i16, refraction: f32, elevations: &[i16]) -> (f32, 
 The main performance issues of this loop arise because each iteration depends on the last.
 
 CPUs work best when the next instruction doesn't depend on the result of any other instruction before it. It uses
-_instruction pipelining_ to issue multiple independent instructions. This is called Instruction Level Parallelism (ILP).
+_instruction pipelining_ to issue multiple instructions, allowing instructions to work in parallel so long as there 
+are no inter-instruction dependencies. This is called Instruction Level Parallelism (ILP).
 
-(INSERT PIPELINING GRAPHIC)
+{{< figure src="/lines-technical/pipeline.png" align=center caption="A 5-stage CPU pipeline courtesy of GeekForGeeks">}}
 
 In the case of the line of sight, the computation that is truly independent of any iteration is
 the angle computation. It is only based on distance and elevation, not any angle before or after.
 
-To be able to unshackle it from the loop-carry dependency, we will need to trade off storing and re-loading it from 
-memory to gain ILP. Thankfully this all still fits in L1 so the ILP benefits far outweigh the memory cost.
+To be able to unshackle it from the loop-carry dependency, we will trade off storing and re-loading it from 
+memory for extra ILP. Thankfully this all still fits in L1 so the ILP benefits far outweigh the memory cost.
 
 We can rewrite the loop as follows:
 ```rust
@@ -428,7 +486,7 @@ for (prefix, num) in zip(prefix_sum.iter_mut(), nums) {
 
 Abstractly, a prefix sum is part of a general family of algorithms called an "inclusive scan". A scan is an even more general
 algorithm that takes a sequence, an associative binary operator, and applies the binary operator to an accumulated value
-and yields the new value. Rust actually has this in its standard library with `.iter().scan()`
+and yields the newly accumulated value. Rust has this in its standard library with `.iter().scan()`
 
 ```rust
 let nums = &[1, 2, 3, 4, 5];
@@ -461,6 +519,12 @@ whether a particular point is visible by checking to see if `angle > prefix_max`
 Fortunately for us, `max` also happens to be associative for the floating point values that we compute. Generally speaking,
 floating point values are not associative due to `NaN`s and signed zero. We never do any computation that
 could yield either result, meaning we are safe to use `max` associatively.
+
+> Interestingly, I'm not the first person to think about the application of a prefix maximum for
+> line of sight visibility calculations. While researching the parallel prefix max, I stumbled upon this interesting
+> [paper](https://www.cs.cmu.edu/~guyb/papers/Ble93.pdf) from all the way back in 1993. The author mentions line of
+> sight visibility calculations as an off-hand example of a parallelizeable prefix scan:
+> {{< figure src="/lines-technical/prefix_scan.png" width="75%" align=center caption="Great minds think alike, I guess" >}}
 
 Scans also have two variants, inclusive and exclusive. Careful readers may have realized we aren't comparing the
 highest angle to the prefix maximum which includes itself (like the above prefix sum). Instead, we are comparing
@@ -499,6 +563,8 @@ fn prefix_max(prefix_max_buf: &mut [f32], angle_buf: &[f32]) {
 }
 
 fn visibility(angles: &[f32], prefix_max: &[f32]) -> (f32, f32) {
+    let longest_distance = 0.0f32;
+    
     for ((distance, angle), prefix_max) in zip(angles.enumerate(), prefix_max) {
         if angle > prefix_max {
             surface_area += distance * TAN_ONE_RADIAN
@@ -551,7 +617,7 @@ fn generate_distances(max_los: usize, refraction: f32, scale: f32) -> (Vec<f32>,
 
 We now can run this once and keep it out of our angle calculation loop. Nice!
 
-Close enough, welcome back sector distances.
+> Close enough, welcome back sector distances.
 
 ### SIMD, Baby
 
@@ -559,10 +625,10 @@ We've almost squeezed every little bit of ILP out of our algorithm, so now is th
 another type of parallelism. SIMD.
 
 SIMD stands for "Single Instruction Multiple Data". SIMD widens registers by multiple times the width
-of data, say 8 f32s, and allows a single instruction to be issued to do computation on all elements. 
+of data, say 8 f32s, and allows a single instruction to be issued to do computation on all elements at once. 
 
 Because of the parallel nature of our computation, we are a good fit for rewriting the algorithm in SIMD. Instead of calculating
-a single angle at a time, we can calculate 8 at a time on my x86 machine - which has AVX2 - and as we'll see later, up to 16 on 
+a single angle at a time, we can calculate 8 at a time on my x86 machine - which has AVX2 - and as we'll see later, up to 16 at a time on 
 AVX-512 machines.
 
 Rust currently has an unstable nightly feature called "portable SIMD" which lets us abstract over the hardware architecture,
@@ -640,14 +706,15 @@ where
 }
 ```
 
-SIMD is a different way of thinking because as you may notice, there are no conditionals.
+Programming with SIMD is a very different way of thinking because as you may notice, there are no conditionals.
 Instead, each element is compared pairwise with each other to create a "mask". Then, you use
 that mask to "select" which elements you want to use for true (the distances) and which to use
 for false (zero).
 
-Rust has some interesting codegen for the `!mask.any()` that I haven't fully grokked so will need to write a separate
-post about, but suffice it to say that it shaved 10% off of our time. If no points are visible, there's
-no reason to do any other calculation so this makes sense.
+Rust has some interesting codegen for the `!mask.any()` that I haven't fully grokked, so I'll leave it for a second blog
+post about it. Suffice it to say is that it still uses all vector instructions, and is able to shave 10% off of our time. 
+If no points within the 8-wide vector are visible (which is very common), there's no reason to do any other calculation,
+so there's at least some intuition as to why it is faster.
 
 ### x86 and IEEE754
 
@@ -662,7 +729,7 @@ generating any `NaN`s or signed zero. For x86 we implement `max` with the `_mm_m
 the `_mm_gt_ps`. No extra instructions.
 
 This gets more important in our next section because we are going to make use of the `max` instruction quite a bit,
-and we need to make sure a minimal number of instructions are generated. It's all to help us stop avoiding the SIMD 
+and we need to make sure the minimal number of instructions are generated. It's all to help us stop avoiding the SIMD 
 elephant in the room: the prefix maximum calculation.
 
 ### Parallel Scans With SIMD
@@ -674,17 +741,19 @@ the algorithm will be from clearing up the instruction pipeliner and keep the ca
 Because `max` is associative, we can calculate the prefix maximum for all the angles that fit within a
 single SIMD register keeping all calculations independent of one another and make ILP go brrr. 
 Then we loop back over the data to propagate the maximum of each through the data. A common pattern you may be 
-picking up on. 
+picking up on.
 
-For example, lets say we have the following angles in two 4-wide registers.
+Onto an example. 
+
+Let's say we have the following angles in two 4-wide registers.
 
 ```
 [1, -1, 2, -2], [3, -3, 4, -4]
 ```
 
-We can calculate the prefix max of the first register by shifting in an identity element - in our case `-f32::INF` - 
-and applying our binary operator `max`. Then we take the result of that and shift in two identity elements 
-to finish calculating the prefix max in-place:
+We can calculate the prefix max of the first register by shifting in an identity element - in our case `-f32::INF` 
+since `max(x, -f32::INF) = x` - and applying our binary operator `max`. Then we take the result of that and shift in 
+two identity elements to finish calculating the prefix max in-place:
 
 ```
 max([   1,   -1,  2, -2],
@@ -694,8 +763,8 @@ max([   1,   -1,  2, -2],
 
 Then reuse that for the next in-place prefix max:
 ```
-max([   1,  max(-1, 1), max(2, -1), max(-2, -1)],
-    [-INF,        -INF,          1, max(1,  -1)])
+max([   1,  max(-1, 1), max(2, -1), max(-2, -1)], ; <- First iteration
+    [-INF,        -INF,          1, max(1,  -1)]) ;  <- First iteration, shifted twice
 = [1, max(-1, 1), max(max(2, -1), 1), max(max(-2, -1), max(1, -1))]
 = [1, 1, 2, 2]
 ```
@@ -716,21 +785,41 @@ max([   3,  max(-3, 3), max(4, -3), max(-4, 4)],
 ```
 
 Now, we can take the maximum of the first register, which is always the last element, and splat it across a whole SIMD
-register, then call `max` to complete the process:
+register, then call `max` with it and the second register to complete the process:
 ```
 max([3, 3, 4, 4],
     [2, 2, 2, 2])
 = [3, 3, 4, 4]
 ```
 
-No change here. But as you can see, associativity is what lets us do this prefix maximum calculation register
+No change here. But as you can see, associativity is what lets us do this prefix maximum calculation in-place
 and lets us only do \\(log_2(4) = 2\\) calls to `max`. When we use 8 or 16 wide registers it is still \\(log_2\\),
 so only a modest increase of one or two extra shifts. It also saves us from having to compute something 
-like `max(max(max(1, -1), 2), -2)`.
+like `max(max(max(1, -1), 2), -2)` which contains a computational dependency.
 
-If you are interested in the nitty-gritty, you can take a look [at the implementation](https://github.com/AllTheLines/CacheTVS/blob/1bcc17c68114398209f027339bd81e810e6cf8c3/crates/total-viewsheds/src/cpu/vector_intrinsics.rs#L173) or also take a look
-at [this website](https://en.algorithmica.org/hpc/algorithms/prefix/) or [this paper](https://www.adms-conf.org/2020-camera-ready/ADMS20_05.pdf) 
-that were great guides and helped in implementing a prefix maximum.
+When it comes to accumulating the max from previous vectors to the next ones, we just keep an accumulated maximum
+that we apply to each vector, completing the full scan and cementing our prefix maximum of all elements:
+```rust
+let mut local_acc = Simd::splat(highest);
+for prefix in vector_prefix {
+    let cur_prefix: f32x4 = Simd::from(*prefix);
+    
+    // get the highest form the current vector
+    let cur_max: f32x4 = Simd::splat(cur_prefix[3]);
+    
+    // apply the accumulator to the current vector and store it back
+    _mm_maxps(local_acc, cur_prefix).copy_to_slice(prefix);
+    
+    // make sure the accumulator holds the result of max(cur_prefix[3], local_acc)
+    local_acc = _mm_maxps(local_acc, cur_max);
+}
+```
+
+
+There's lots more details and not enough space, so if you are interested in the nitty-gritty, you can take a look at
+[the implementation](https://github.com/AllTheLines/CacheTVS/blob/1bcc17c68114398209f027339bd81e810e6cf8c3/crates/total-viewsheds/src/cpu/vector_intrinsics.rs#L173) 
+or take a look at [this website](https://en.algorithmica.org/hpc/algorithms/prefix/) or [this paper](https://www.adms-conf.org/2020-camera-ready/ADMS20_05.pdf) 
+which were great guides.
 
 ### Reduction
 
@@ -738,7 +827,11 @@ Now that we are able to calculate the longest line of sight for a given point, w
 the map. Since we also only go in a single direction, we need to run that for every angle.
 
 As cores finish up doing their single angle heatmap and line of sight calculation, we simply accumulate their results
-into a single "final map" which is the result of the accumulated data for all 360 degrees.
+into a single "final map". At the end, the map accumulated data for all 360 degrees and we're done! We have a total viewshed!
+
+> It should be noted that there are a good number of cores that get wasted when running with a core count
+> that doesn't evenly divide 360. Cores idling waiting for the next angle which doesn't come. This matters for runs
+> bigger than a single tile - but we leave this as future work.
 
 ### Final Results
 
@@ -748,7 +841,6 @@ water did in fact come out. We took the computation from 120 seconds an angle, d
 DRUM ROLL PLEASE
 
 _**75 seconds per angle.**_
-
 
 Astounding. This brought us down to 57 minutes for all of Everest on my 8 core machine.
 Every little bit of optimization and tuning brought us here, and it was because of the hard work
@@ -765,22 +857,19 @@ Using the Turins also unlocked a huge number of extra cores. I found that 48 cor
 Now instead of taking an hour, with 48 cores and AVX512, we were taking 4 minutes for all of Everest. **ALL OF EVEREST**.
 This is a 160x speedup over the initial GPU algorithm.
 
-It should be noted that there are a good number of cores that get wasted when running with a core count 
-that doesn't evenly divide 360. Cores idling waiting for the next angle which doesn't come - but we leave this as future work.
-
 ## A Full World Run
 
 Now that we were confident that we had the quickest algorithm we could think up, it was time to run the longest line
 of sight algorithm for every tile in the whole world. Tom [calculated]([here](https://tombh.co.uk/packing-world-lines-of-sight)) 
-the worst case line of sight that covered the globe. Chunking the world up as such ended with roughly 2500 tiles ranging 
+the worst case line of sight which covered the globe. Chunking the world up ended with roughly 2500 tiles ranging 
 from 50 kilometers across to a whopping 800km across.
 
 Since our algorithm is \\(O(n^3)\\) where \\(n\\) is the worst case line of sight, small tiles will run in much quicker than 
 4 minutes, while larger tiles will take _much_ longer than 4 minutes. About 50% of the tiles are under 450km, whereas
-50% of the total area of all tiles comes in at 1900 tiles and under 650km. We still had a tall task.
+50% of the total area of all tiles comes in at 1900 tiles and under 650km.
 
-To process all the tiles, we took a stab at a Tom-and-Ryan version of [MapReduce](https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf)
-cluster of 5 AMD Turin machines which we called Atlas, which you can read about [here](https://tombh.co.uk/longest-line-of-sight#atlas-the-automater).
+To process all the tiles, we took a stab at a Tom-and-Ryan version of a [MapReduce](https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf)
+cluster with 5 AMD Turin machines. We called it Atlas, and you can read about it [here](https://tombh.co.uk/longest-line-of-sight#atlas-the-automater).
 
 All in all, the full world run took 18 hours and cost us a few hundred dollars which is much less than the
 few hundred thousand that Tom initially estimated.
@@ -790,22 +879,17 @@ few hundred thousand that Tom initially estimated.
 Looking for the longest line of sight? Go check it out at [https://alltheviews.world](https://alltheviews.world) and see 
 our curated list of the top ten longest lines of sight. You won't believe number 3!
 
-Don't forget to go play with the interactive map at[https://map.alltheviews.world](https://mapalltheviews.world) to 
-find the longest line of sight for any location on earth, or even the longest line of sight for your country or state!
+Don't forget to go play with the interactive map at [https://map.alltheviews.world](https://mapalltheviews.world). Click
+to find the longest line of sight for any point on earth, and zoom to even find the longest line of sight for your country or state!
 
-If you want to take a look at Atlas, you can do [here](https://github.com/AllTheViews/viewview). If you would like
-to take a look at all the code this blog post is about, here is the
-link for the repo of our total viewshed algorithm, [CacheTVS](https://github.com/AllTheViews/CacheTVS).
+If you would like to take a look at all the code this blog post is about, or have any ideas for improvements, here is the
+GitHub link for our total viewshed algorithm, [CacheTVS](https://github.com/AllTheViews/CacheTVS).
 
 ## Acknowledgements
 
-I'd like to acknowledge Tom for being the rock for which all this research was able to take place.
-My family and friends for listening to my insane ramblings. They really didn't know much that was going on
-until it became visual.
+I'd like to acknowledge Tom for being the rock for which all this research was able to take place on top of.
 
-A big thanks to Matt Flatt for teaching my CS4400 class in college that gave me the language and tools to approach 
-these performance issues. 
-
-I'd also like to thank my dog for spending many of my late nights curled up on the couch with me.
+I'd also like to acknowledge my family and friends for listening to my insane ramblings. They really didn't know 
+much that was going on until it all came together, and they got to play around with the tool. Thanks for your patience!
 
 So long, and thanks for all the fish!
