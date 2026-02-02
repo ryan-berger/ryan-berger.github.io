@@ -30,7 +30,7 @@ and then determine whether there are obstructions. This approach works well for 
 more than one runs head-first into cache issues. 
 
 You could imagine if you naively apply this pair-wise computation you end up re-fetching and re-calculating quite a lot.
-Tools like ArcGIS do single viewshed calculations on the order of minutes, which works just fine for a single viewshed
+Tools like [ArcGIS](http://pro.arcgis.com/en/pro-app/tool-reference/3d-analyst/viewshed.htm) do single viewshed calculations on the order of minutes, which works just fine for a single viewshed
 but makes every point on the planet algorithmically infeasible, so a new solution was needed. We needed a "total viewshed" algorithm,
 not just a single viewshed.
 
@@ -78,7 +78,7 @@ Where \\(h_{pov}\\) is the height of the observer.
 > 
 > For computational purposes we won't actually carry out \\(tan^{-1}\\). We can get away with this because
 > it is continuous and monotonically increasing on \\((-\infty, \infty)\\). This means
-> \\( tan^{-1}(x_1) > tan^{-1}(x_2) \iff x_1 > x_2 \\) so the extra computation doesn't get us anywhere
+> \\( tan^{-1}(x_1) > tan^{-1}(x_2) \iff x_1 > x_2 \\) so the extra computation doesn't give us anything extra.
 
 
 Once the elevations are laid out, we can determine visibility for each point along the line of sight.
@@ -152,7 +152,7 @@ Enter, me.
 ### Crazy Initial Estimates
 
 Tom's initial runs showed that running all of Everest took about 12 hours at a 600km worst case
-line of sight. For all our tests determined this was a good estimate, and it was very unlikely that there is
+line of sight. All our tests determined this was a good estimate, and it was very unlikely that there is
 actually a line of sight longer than 600km due to earth curvature and obstructions. Our first test runs didn't show any
 lines of sight over 400km, confirming this was a safe bet. Once it came time to do the whole world though, this wouldn't do.
 
@@ -217,7 +217,7 @@ of sight from left to right instead of corner to corner?
 
 This looked absolutely too good to be true! Surely rotating the map only works for some points but not all. And maybe
 it gets strange at angles that aren't divisible by 45 and the whole idea is dead in the water? Would the distances
-be able to stay continuous? After wondering if this was doable or missing points, Tom and I sat down convinced ourselves
+be able to stay continuous? After wondering if this was doable or missing points, Tom and I sat down, convinced ourselves
 that this was possible and generated this image:
 
 {{< figure src="/lines-technical/logo.png" align=center caption="A circle seen forming in the center of the DEM from all the rotations">}}
@@ -625,7 +625,7 @@ We've almost squeezed every little bit of ILP out of our algorithm, so now is th
 another type of parallelism. SIMD.
 
 SIMD stands for "Single Instruction Multiple Data". SIMD widens registers by multiple times the width
-of data, say 8 f32s, and allows a single instruction to be issued to do computation on all elements at once. 
+of data, say 8 `f32`s, and allows a single instruction to be issued to do computation on all elements at once. 
 
 Because of the parallel nature of our computation, we are a good fit for rewriting the algorithm in SIMD. Instead of calculating
 a single angle at a time, we can calculate 8 at a time on my x86 machine - which has AVX2 - and as we'll see later, up to 16 at a time on 
@@ -712,7 +712,7 @@ that mask to "select" which elements you want to use for true (the distances) an
 for false (zero).
 
 Rust has some interesting codegen for the `!mask.any()` that I haven't fully grokked, so I'll leave it for a second blog
-post about it. Suffice it to say is that it still uses all vector instructions, and is able to shave 10% off of our time. 
+post. Suffice it to say that it still uses all vector instructions, and is able to shave 10% off of our time. 
 If no points within the 8-wide vector are visible (which is very common), there's no reason to do any other calculation,
 so there's at least some intuition as to why it is faster.
 
@@ -725,8 +725,7 @@ comparisons and floating point maximums end up generating a lot of extra instruc
 standards because guess what: Intel's instructions don't.
 
 For this project, we actually don't care a ton about the IEEE standard for comparison or maximum as we aren't
-generating any `NaN`s or signed zero. For x86 we implement `max` with the `_mm_max_ps` intrinsic and implement greater than with
-the `_mm_gt_ps`. No extra instructions.
+generating any `NaN`s or signed zero. For x86 we implement `max` with the `_mm_max_ps` intrinsic and implement greater than with `_mm_gt_ps`. No extra instructions.
 
 This gets more important in our next section because we are going to make use of the `max` instruction quite a bit,
 and we need to make sure the minimal number of instructions are generated. It's all to help us stop avoiding the SIMD 
@@ -736,10 +735,10 @@ elephant in the room: the prefix maximum calculation.
 
 Calculating the prefix maximum with multiple threads would induce a huge amount of overhead for a small amount
 of work, so instead we want to parallelize our prefix maximum via SIMD. The level of parallelism we get out of
-the algorithm will be from clearing up the instruction pipeliner and keep the carried dependencies minimal.
+the algorithm will be from clearing up the instruction pipeliner and keeping the carried dependencies minimal.
 
 Because `max` is associative, we can calculate the prefix maximum for all the angles that fit within a
-single SIMD register keeping all calculations independent of one another and make ILP go brrr. 
+single SIMD register, keeping all calculations independent of one another and make ILP go brrr. 
 Then we loop back over the data to propagate the maximum of each through the data. A common pattern you may be 
 picking up on.
 
@@ -827,7 +826,7 @@ Now that we are able to calculate the longest line of sight for a given point, w
 the map. Since we also only go in a single direction, we need to run that for every angle.
 
 As cores finish up doing their single angle heatmap and line of sight calculation, we simply accumulate their results
-into a single "final map". At the end, the map accumulated data for all 360 degrees and we're done! We have a total viewshed!
+into a single "final map". At the end, the map accumulates data for all 360 degrees and we're done! We have a total viewshed!
 
 > It should be noted that there are a good number of cores that get wasted when running with a core count
 > that doesn't evenly divide 360. Cores idling waiting for the next angle which doesn't come. This matters for runs
@@ -862,7 +861,7 @@ This is a 160x speedup over the initial GPU algorithm.
 Now that we were confident that we had the quickest algorithm we could think up, it was time to run the longest line
 of sight algorithm for every tile in the whole world. Tom [calculated]([here](https://tombh.co.uk/packing-world-lines-of-sight)) 
 the worst case line of sight which covered the globe. Chunking the world up ended with roughly 2500 tiles ranging 
-from 50 kilometers across to a whopping 800km across.
+from 50 kilometers across to a whopping 800km.
 
 Since our algorithm is \\(O(n^3)\\) where \\(n\\) is the worst case line of sight, small tiles will run in much quicker than 
 4 minutes, while larger tiles will take _much_ longer than 4 minutes. About 50% of the tiles are under 450km, whereas
