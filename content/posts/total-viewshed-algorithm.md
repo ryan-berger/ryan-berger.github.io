@@ -168,7 +168,7 @@ Tom left his improvements on the back burner for 8 years until July 2025 when he
 
 ## Our Benchmark Viewshed
 
-Since Mount Everest is the tallest point in the world, the viewshed with its peak was a very
+Since Mount Everest is the tallest point in the world, the total viewshed that includes its peak was a very
 attracting benchmark for us. We immediately made it our "north star". You'll notice throughout the blogpost I
 discuss timings of per-angle benchmarks, **all of them refer to Everest.**
 
