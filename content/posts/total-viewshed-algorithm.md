@@ -169,8 +169,8 @@ Tom left his improvements on the back burner for 8 years until July 2025 when he
 ## Our Benchmark Viewshed
 
 Since Mount Everest is the tallest point in the world, the viewshed with its peak was a very
-attracting benchmark for us. We immediately made it our "north star". You'll notice that I through
-timings of per-angle benchmarks, **all of them refer to Everest.**
+attracting benchmark for us. We immediately made it our "north star". You'll notice throughout the blogpost I
+discuss timings of per-angle benchmarks, **all of them refer to Everest.**
 
 The worst case line of site was estimated to be 670km by Tom, but we wanted it just a tad smaller so we could run faster.
 So, we stuck with a nice round 600km. This also happens to be one of the biggest worst case lines of sight in the world, 
