@@ -1,6 +1,6 @@
 ---
 title: "Finding the Longest Line of Sight"
-date: 2026-02-02T19:10:00-07:00
+date: 2026-02-09T19:10:00-07:00
 searchHidden: false
 draft: false
 ---
