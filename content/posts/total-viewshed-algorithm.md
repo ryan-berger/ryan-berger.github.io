@@ -29,7 +29,7 @@ As it is truly 6 months worth of information, I've broken it up into 3 main chun
 3. [Finding the longest line of sight](#finding-the-longest-line-of-sight-with-cachetvs), via multithreading, SIMD,
   and instruction level parallelism all with the safety of Rust!
 
-Use these links along with the Table of Contents above to digest at your leisure!
+Use these links along with the Table of Contents drop-down above to digest at your leisure!
 
 # The Total Viewshed Algorithm
 
