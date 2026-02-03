@@ -184,8 +184,8 @@ this wouldn't do.
 > sight check out [this section](https://tombh.co.uk/packing-world-lines-of-sight) in Tom's blogpost.
 
 Tom worried there may be even longer worst case lines of sight, such as 800km. An algorithm that has to check a 
-DEM which has \\(n \times n\\) elevations, and checking a total of \\(n\\) elevations along your line of sight for 
-360 angles, you are looking at potentially taking almost 2.4x longer with a 1.3x longer worst case line of sight.
+DEM which has \\(n \times n\\) elevations, and also checks a total of \\(n\\) elevations along your line of sight - for 
+360 angles - you are looking at potentially taking almost 2.4x longer with a 1.3x longer worst case line of sight.
 
 Tom's initial estimates were that this would cost us potentially hundreds of thousands of dollars and many months
 of spot instance compute (meaning it could be shut down at any time). This was not feasible for either of our time
@@ -237,7 +237,7 @@ The distances were also entirely uniform between points.
 Since these lines are perfectly straight, why couldn't I make them entirely contiguous in memory and process the lines 
 of sight from left to right instead of corner to corner?
 
-{{< figure src="/lines-technical/rotated.png" align=center >}}
+{{< figure src="/lines-technical/rotated.png" align=center caption="After the first load, the rest of the green points are in cache!" >}}
 
 This looked absolutely too good to be true! Surely rotating the map only works for some points but not all. And maybe
 it gets strange at angles that aren't divisible by 45 and the whole idea is dead in the water? Would the distances
@@ -272,10 +272,11 @@ The deltas and sector distances are dead! Viva la Rotación!
 ## The Stars (Mostly) Align
 
 Now that we rotate the map, we completely front-load all our cache misses and perfectly align our data for our 
-line of sight calculations. Of course, this is all unidirectional as we are only calculating the line of sight for all
-points at a single angle. This rotation itself incurs roughly a one-second penalty for even the biggest DEMs. A huge win.
+line of sight calculations. Of course, this is all unidirectional as we are only calculating every point's line of sight 
+at a single angle. Rotation to align all the lines of sight incurs roughly a one-second penalty for even the biggest 
+DEMs. A huge win.
 
-Cutting down the amount of data ends up meaning we can fit multiple widths worth of the DEM into L1 for calculation. 
+Cutting down the amount of data ends up meaning that we can fit multiple widths worth of the DEM into L1 for calculation. 
 Another HUGE win.
 
 There is one downside that bears mentioning: when calculating the rotated coordinates for an elevation it may not fall 
@@ -351,7 +352,7 @@ Please enjoy this Shiba who is a shop-keeper.
 Once we developed the optimal cache setup to guarantee that our calculations are no longer
 memory bound, the world became our oyster. A global total viewshed calculation seemed right on our doorstep.
 
-Initial runs showed that our algorithm ran at about ~120 seconds per angle for Everest with very little optimization,
+Initial runs showed that our algorithm ran at about ~120 seconds per angle for Everest. This being with very little optimization,
 just straight-line Rust code. This timing means Everest takes 12 hours, but good news, it is single threaded so there's
 plenty more to go.
 
@@ -385,21 +386,23 @@ on an angle by angle snapshot of the data, we can already parallelize this by th
 which for my machine is 8 cores. Because this workload is compute heavy, it doesn't make sense to make use of SMT
 since threads will be fighting heavily for compute units.
 
-To get the new time with 8-way parallelism, we just divide the amount of work, 360 angles, by the amount of cores
-and multiply by the number of seconds.
+To get the new total benchmark time for 8-way parallelism, we just divide the amount of work, 360 angles, by the
+amount of cores and multiply by the number of seconds each takes.
 
 $$
 ((360 / 8) * 120\space secs) / 60 \space secs \newline
 = ~1.5 \space hrs
 $$
 
-We're under two hours for all of everest!
+We're under two hours for all of Everest!
 
 ## Instruction Level Parallelism
 
 With the easy parallelization out of the way, it is time to see if we can squeeze extra parallelism out of our processor. 
 There are many ways in which a CPU is parallel, not just multi-threading. You also have instruction-level
-parallelism along with SIMD. Initially, lets focus on the first. Speaking of, what does our line of sight calculation currently look like?
+parallelism along with SIMD. 
+
+Initially, lets focus on the first. Speaking of, what does our line of sight calculation currently look like?
 
 
 ```rust
@@ -421,7 +424,7 @@ fn line_of_sight(pov_height: i16, refraction: f32, elevations: &[i16]) -> (f32, 
         //
         // Add its area to the surface area, and update the longest
         // distance we've seen, and set it as the new highest angle
-        if angle > highest_angle {
+        if angle > highest_angle { // <- depends on the previous iteration
             longest_distance = distance as f32
             highest_angle = angle
             
@@ -435,9 +438,9 @@ fn line_of_sight(pov_height: i16, refraction: f32, elevations: &[i16]) -> (f32, 
 }
 ```
 
-The main performance issues of this loop arise because each iteration depends on the last.
+The main performance issues of this loop arise because each iteration depends on the previous iteration.
 
-CPUs work best when the next instruction doesn't depend on the result of any other instruction before it. It uses
+CPUs work best when the next instruction doesn't depend on the result of any previous instruction. CPUs use
 _instruction pipelining_ to issue multiple instructions, allowing instructions to work in parallel so long as there 
 are no inter-instruction dependencies. This is called Instruction Level Parallelism (ILP).
 
@@ -472,7 +475,7 @@ fn line_of_sight(pov_height: i16, refraction: f32, elevations: &[i16], angle_buf
         //
         // Add its area to the surface area, and update the longest
         // distance we've seen, and set it as the new highest angle
-        if angle > highest_angle {
+        if angle > highest_angle {  // <- depends on the previous iteration
             longest_distance = distance as f32
             highest_angle = angle
             
@@ -492,8 +495,8 @@ surface area calculation still aren't particularly parallel. Let's fix that!
 ## Prefix Sums and Scans
 
 A prefix sum is a computation that takes a list of numbers and maps it to another list
-where each element becomes the cumulative sum of all elements before it, hence its name. Here's a sample
-implementation:
+where each new element is the cumulative sum of all elements before it, hence its name.
+Here's a sample implementation:
 
 ```rust
 
@@ -545,8 +548,8 @@ could yield either result, meaning we are safe to use `max` associatively.
 
 > Interestingly, I'm not the first person to think about the application of a prefix maximum for
 > line of sight visibility calculations. While researching the parallel prefix max, I stumbled upon this interesting
-> [paper](https://www.cs.cmu.edu/~guyb/papers/Ble93.pdf) from all the way back in 1993. The author mentions line of
-> sight visibility calculations as an off-hand example of a parallelizeable prefix scan:
+> [paper](https://www.cs.cmu.edu/~guyb/papers/Ble93.pdf) written all the way back in 1993. The author mentions line of
+> sight visibility calculations as an off-hand example of how a prefix scan can enable parallelism:
 > {{< figure src="/lines-technical/prefix_scan.png" width="75%" align=center caption="Great minds think alike, I guess" >}}
 
 Scans have two variants, inclusive and exclusive. Careful readers may have realized we aren't comparing the
@@ -650,7 +653,7 @@ another type of parallelism. SIMD.
 SIMD stands for "Single Instruction Multiple Data". SIMD widens registers by multiple times the width
 of data, say 8 `f32`s, and allows a single instruction to be issued to do computation on all elements at once. 
 
-Because of the parallel nature of our computation, we are a good fit for rewriting the algorithm in SIMD. Instead of calculating
+Because of the parallel nature of our computation, we are a good fit for rewriting the algorithm to use SIMD. Instead of calculating
 a single angle at a time, we can calculate 8 at a time on my x86 machine - which has AVX2 - and as we'll see later, up to 16 at a time on 
 AVX-512 machines.
 
@@ -731,10 +734,10 @@ where
 
 Programming with SIMD is a very different way of thinking because as you may notice, there are no conditionals.
 Instead, each element is compared pairwise with each other to create a "mask". Then, you use
-that mask to "select" which elements you want to use for true (the distances) and which to use
+that mask to "select" which elements you want to use for true (our distances) and which to use
 for false (zero).
 
-Rust has some interesting codegen for the `!mask.any()` that I haven't fully grokked, so I'll leave it for a second blog
+Rust has some very interesting codegen for the `!mask.any()` that I haven't fully grokked, so I'll leave it for a second blog
 post. Suffice it to say that it still uses all vector instructions, and is able to shave 10% off of our time. 
 If no points within the 8-wide vector are visible (which is very common), there's no reason to do any other calculation,
 so there's at least some intuition as to why it is faster.
@@ -761,11 +764,11 @@ of work, so instead we want to parallelize our prefix maximum via SIMD. The leve
 the algorithm will be from clearing up the instruction pipeliner and keeping the carried dependencies minimal.
 
 Because `max` is associative, we can calculate the prefix maximum for all the angles that fit within a
-single SIMD register, keeping all calculations independent of one another and make ILP go brrr. 
+single SIMD register, keeping all calculations independent of one another to make ILP go brrr. 
 Then we loop back over the data to propagate the maximum of each through the data. A common pattern you may be 
 picking up on.
 
-Onto an example. 
+That all is very abstract, so here's a concrete example:
 
 Let's say we have the following angles in two 4-wide registers.
 
@@ -806,7 +809,7 @@ max([   3,  max(-3, 3), max(4, -3), max(-4, 4)],
 = [3, 3, 4, 4]
 ```
 
-Now, we can take the maximum of the first register, which is always the last element, and splat it across a whole SIMD
+Now, we can take the maximum from the first register, which is always the last element, and splat it across a whole SIMD
 register, then call `max` with it and the second register to complete the process:
 ```
 max([3, 3, 4, 4],
@@ -840,8 +843,8 @@ for prefix in vector_prefix {
 
 There's lots more details and not enough space, so if you are interested in the nitty-gritty, you can take a look at
 [the implementation](https://github.com/AllTheLines/CacheTVS/blob/1bcc17c68114398209f027339bd81e810e6cf8c3/crates/total-viewsheds/src/cpu/vector_intrinsics.rs#L173) 
-or take a look at [this website](https://en.algorithmica.org/hpc/algorithms/prefix/) or [this paper](https://www.adms-conf.org/2020-camera-ready/ADMS20_05.pdf) 
-which were great guides.
+. Also take a look at [this website](https://en.algorithmica.org/hpc/algorithms/prefix/) or [this paper](https://www.adms-conf.org/2020-camera-ready/ADMS20_05.pdf) 
+which were great guides for SIMD and AVX prefix scans.
 
 ## Accumulating
 
@@ -875,15 +878,15 @@ Turin and our use of const generics and portable SIMD implementation let us seam
 cutting down the calculation to an average of 35 seconds per angle.
 
 Using the Turins also unlocked a huge number of extra cores. I found that 48 cores was the sweet spot for our algorithm. 
-Now instead of taking an hour, with 48 cores and AVX512, we were taking 4 minutes for all of Everest. **ALL OF EVEREST**.
-This is a 160x speedup over the initial GPU algorithm.
+Now instead of taking an hour, with 48 cores and AVX512, we were taking **_4 minutes_** for all of Everest. **ALL OF EVEREST**.
+This is a **160x** speedup over the initial GPU algorithm.
 
 # A Full World Run
 
 Now that we were confident that we had the quickest algorithm we could think up, it was time to run the longest line
 of sight algorithm for every tile in the whole world. Tom [calculated]([here](https://tombh.co.uk/packing-world-lines-of-sight)) 
-the worst case line of sight which covered the globe. Chunking the world up ended with roughly 2500 tiles ranging 
-from 50 kilometers across to a whopping 800km.
+the worst case line of sight and chunked up the globe, which ended up chunking into about 2500 tiles ranging 
+from 50 kilometers across to a whopping 800 kilometers.
 
 Since our algorithm is \\(O(n^3)\\) where \\(n\\) is the worst case line of sight, small tiles will run in much quicker than 
 4 minutes, while larger tiles will take _much_ longer than 4 minutes. About 50% of the tiles are under 450km, whereas
@@ -900,11 +903,11 @@ few hundred thousand that Tom initially estimated.
 Looking for the longest line of sight? Go check it out at [https://alltheviews.world](https://alltheviews.world) and see 
 our curated list of the top ten longest lines of sight. You won't believe number 3!
 
-Don't forget to go play with the interactive map at [https://map.alltheviews.world](https://mapalltheviews.world). Click
+Don't forget to go play with the interactive map at [https://map.alltheviews.world](https://map.alltheviews.world). Click
 to find the longest line of sight for any point on earth, and zoom to even find the longest line of sight for your country or state!
 
 If you would like to take a look at all the code this blog post is about, or have any ideas for improvements, here is the
-GitHub link for our total viewshed algorithm, [CacheTVS](https://github.com/AllTheViews/CacheTVS).
+GitHub link for our total viewshed algorithm, [CacheTVS](https://github.com/AllTheLines/CacheTVS).
 
 # Acknowledgements
 
