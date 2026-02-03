@@ -1,8 +1,8 @@
 ---
 title: "Finding the Longest Line of Sight"
-date: 2026-01-31T19:10:00-07:00
-searchHidden: true
-draft: true
+date: 2026-02-02T19:10:00-07:00
+searchHidden: false
+draft: false
 ---
 
 One fateful day I was browsing a tech forum, [lobste.rs](https://lobste.rs), and stumbled upon a message that would captivate me for 6 months.

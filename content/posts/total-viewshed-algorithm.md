@@ -1,8 +1,8 @@
 ---
 title: "A Total Viewshed Algorithm to Find the Longest Line of Sight"
-date: 2026-02-01T20:10:00-07:00
-searchHidden: true
-draft: true
+date: 2026-02-02T20:10:00-07:00
+searchHidden: false
+draft: false
 ShowToC: true
 ---
 
