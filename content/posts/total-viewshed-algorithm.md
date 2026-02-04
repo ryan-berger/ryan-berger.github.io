@@ -407,13 +407,13 @@ Initially, lets focus on the first. Speaking of, what does our line of sight cal
 
 ```rust
 fn line_of_sight(pov_height: i16, refraction: f32, elevations: &[i16]) -> (f32, f32) { // (surface area, distance)
-    let mut highest_angle = -f32::INF;
+    let mut highest_angle = -f32::INFINITY;
     let mut longest_distance = 0.0f32;
     let mut surface_area = 0.0f32;
     
     for (distance, elevation) in elevations.enumerate() {
         // calculate the curve and refraction adjustment
-        let curve_and_refraction = ((distance.ipow(2) as f32) * (1 - refraction)) / EARTH_DIAMETER;
+        let curve_and_refraction = ((distance.powi(2) as f32) * (1 - refraction)) / EARTH_DIAMETER;
         let elevation_prime = (elevation as f32) + curve_and_refraction
         
         // calculate the "angle" (really a ratio, not arctan)
@@ -459,13 +459,13 @@ fn line_of_sight(pov_height: i16, refraction: f32, elevations: &[i16], angle_buf
     
     for (angle, (distance, elevation)) in zip(angle_buf.iter_mut(), elevations.enumerate()) {
         // calculate the curve and refraction adjustment
-        let curve_and_refraction = ((distance.ipow(2) as f32) * (1 - refraction)) / EARTH_DIAMETER;
+        let curve_and_refraction = ((distance.powi(2) as f32) * (1 - refraction)) / EARTH_DIAMETER;
         let elevation_prime = (elevation as f32) + curve_and_refraction
         
         *angle = (elevation_prime - (pov_height as f32)) / distance
     }
     
-    let mut highest_angle = -f32::INF;
+    let mut highest_angle = -f32::INFINITY;
     let mut longest_distance = 0.0f32;
     let mut surface_area = 0.0f32;
     
@@ -572,7 +572,7 @@ three discrete steps:
 fn calculate_angles(pov_height: f32, refraction: f32, angle_buf: &mut [f32], elevations: &[i16]) {
     for (angle, (distance, elevation)) in zip(angle_buf.iter_mut(), elevations.enumerate()) {
 
-        let curve_and_refraction = ((distance.ipow(2) as f32) * (1 - refraction)) / EARTH_DIAMETER;
+        let curve_and_refraction = ((distance.powi(2) as f32) * (1 - refraction)) / EARTH_DIAMETER;
         let elevation_prime = (elevation as f32) + curve_and_refraction
         
         *angle = (elevation_prime - (pov_height as f32)) / distance
@@ -580,7 +580,7 @@ fn calculate_angles(pov_height: f32, refraction: f32, angle_buf: &mut [f32], ele
 }
 
 fn prefix_max(prefix_max_buf: &mut [f32], angle_buf: &[f32]) {
-    let mut highest_seen = -f32::INF;
+    let mut highest_seen = -f32::INFINITY;
 
      for (prefix_max, (distance, angle)) in zip(prefix_max_buf.iter_mut(), angles.enumerate()) {
         *prefix_max = highest_seen;
@@ -776,8 +776,8 @@ Let's say we have the following angles in two 4-wide registers.
 [1, -1, 2, -2], [3, -3, 4, -4]
 ```
 
-We can calculate the prefix max of the first register by shifting in an identity element - in our case `-f32::INF` 
-since `max(x, -f32::INF) = x` - and applying our binary operator `max`. Then we take the result of that and shift in 
+We can calculate the prefix max of the first register by shifting in an identity element - in our case `-f32::INFINITY;` 
+since `max(x, -f32::INFINITY;) = x` - and applying our binary operator `max`. Then we take the result of that and shift in 
 two identity elements to finish calculating the prefix max in-place:
 
 ```
