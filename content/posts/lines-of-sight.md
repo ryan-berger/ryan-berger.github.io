@@ -73,8 +73,9 @@ sight of 600km. Tom theorized Everest's could be much bigger at ~800km making th
 you are working with a square, 600km -> 800km is actually 1.7x more data, not just 1.3x. The computation time it takes is 
 cubed in terms of the line of sight, meaning 600km -> 800km is actually 2.3x slower to run, taking just over a day. Ouch!
 
-Even taking a quarter of that amount of time and doing this for the entire world is algorithmically infeasible,
-unless you have many millions of dollars and years of compute to spare.
+Even taking a quarter of that amount of time and doing this for the entire world is algorithmically infeasible. In fact, 
+Tom's initial estimates were that it would take around a year for the total viewshed algorithm to complete, 
+and roughly $200,000. Neither he nor I have the time or money to spend on that.
 
 ### Computers Are Faster Than You Think
 

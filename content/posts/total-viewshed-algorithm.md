@@ -35,7 +35,7 @@ Use these links along with the Table of Contents drop-down above to digest at yo
 
 A [viewshed](https://en.wikipedia.org/wiki/Viewshed) is all the area visible from a particular location on the map:
 
-{{< figure src="/lines/cardiff_viewshed.webp" align=center >}}
+{{< figure src="/lines/cardiff_viewshed.png" align=center >}}
 
 It also happens to hold the longest line of sight, since it is the furthest
 visible point from the observer.
@@ -77,7 +77,7 @@ $$
 E^\prime = E + (D^2(R - 1) / d_{earth}); \newline
 $$
 
-Where \\(E^\prime\\) is the adjusted elevation, \\(D\\) is the distance to the point, \\(R\\) is a refraction coefficient
+Where \\(E\\) is the original elevation, \\(D\\) is the distance to the point, \\(R\\) is a refraction coefficient
 which has been calculated to be \\(\approx.13\\), and \\(d_{earth}\\) is the diameter of the earth in kilometers.
 
 The angle of elevation, \\(\theta\\), between a point along the line of sight forms a right triangle. Since adjusted  elevation is on 
@@ -92,8 +92,9 @@ Where \\(h_{pov}\\) is the height of the observer.
 > _**Math Nerd (arc)Tangent**:_
 > 
 > For computational purposes we won't actually carry out \\(tan^{-1}\\). We can get away with this because
-> it is continuous and monotonically increasing on \\((-\infty, \infty)\\). This means
-> \\( tan^{-1}(x_1) > tan^{-1}(x_2) \iff x_1 > x_2 \\) so the extra computation doesn't give us anything extra.
+> 1\) we don't need the angle for anything other than comparison and 2\) \\(tan^{-1}\\) is continuous and monotonically 
+> increasing on \\((-\infty, \infty)\\). This means \\( tan^{-1}(x_1) > tan^{-1}(x_2) \iff x_1 > x_2 \\) so the extra computation
+> doesn't give us anything extra.
 
 
 Once the angles of elevation are laid out, we can determine visibility for each point along the line of sight.
@@ -878,8 +879,12 @@ Turin and our use of const generics and portable SIMD implementation let us seam
 cutting down the calculation to an average of 35 seconds per angle.
 
 Using the Turins also unlocked a huge number of extra cores. I found that 48 cores was the sweet spot for our algorithm. 
-Now instead of taking an hour, with 48 cores and AVX512, we were taking **_4 minutes_** for all of Everest. **ALL OF EVEREST**.
-This is a **160x** speedup over the initial GPU algorithm.
+Now instead of taking an hour, with 48 cores and AVX512, we were taking just over **_4 minutes_** for all of Everest. **ALL OF EVEREST**.
+This is a **160x** speedup over Tom's GPU algorithm.
+
+> As I was writing this we were able to get access to an even more powerful AMD Turin. With 96 cores
+> it saw no slowdowns past 48 cores, and a 10% performance increase per-angle, taking the total time of Everest's total 
+> viewshed down to **2 minutes**. Future runs will be using these.
 
 # A Full World Run
 
