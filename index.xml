@@ -4,10 +4,21 @@
     <title>Ryan Berger&#39;s Page</title>
     <link>https://ryan.berge.rs/</link>
     <description>Recent content on Ryan Berger&#39;s Page</description>
-    <generator>Hugo -- 0.155.3</generator>
+    <generator>Hugo -- 0.164.0</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 09 Feb 2026 20:10:00 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 23 Jul 2026 00:00:00 -0700</lastBuildDate>
     <atom:link href="https://ryan.berge.rs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A New Chapter</title>
+      <link>https://ryan.berge.rs/posts/new-chapter/</link>
+      <pubDate>Thu, 23 Jul 2026 00:00:00 -0700</pubDate>
+      <guid>https://ryan.berge.rs/posts/new-chapter/</guid>
+      <description>&lt;p&gt;Unfortunately this is not &lt;a href=&#34;https://ryan.berge.rs/posts/programming-at-cafe/&#34;&gt;lung transplant news&lt;/a&gt;. I&amp;rsquo;m still waiting and haven&amp;rsquo;t received a
+&lt;a href=&#34;https://ryan.berge.rs/posts/ghost-at-your-own-transplant/&#34;&gt;call&lt;/a&gt; in about 8 months.&lt;/p&gt;
+&lt;p&gt;I did want to announce however, that as of today I no longer work at NVIDIA!&lt;/p&gt;
+&lt;p&gt;While I worked there I was pretty strict about what the extracurricular projects I engaged in and therefore put on my blog.
+Part of this was the amount of work I did, part of it was the golden handcuffs that kept my hands still.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>A Total Viewshed Algorithm to Find the Longest Line of Sight</title>
       <link>https://ryan.berge.rs/posts/total-viewshed-algorithm/</link>
