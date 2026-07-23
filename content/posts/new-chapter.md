@@ -5,7 +5,7 @@ searchHidden: false
 draft: false
 ---
 
-Unfortunately this is not [lung transplant news](/posts/programming-at-cafe/), I'm still waiting and haven't received a 
+Unfortunately this is not [lung transplant news](/posts/programming-at-cafe/). I'm still waiting and haven't received a 
 [call](/posts/ghost-at-your-own-transplant/) in about 8 months.
 
 I did want to announce however, that as of today I no longer work at NVIDIA! 
